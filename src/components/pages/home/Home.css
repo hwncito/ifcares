@@ -1,0 +1,31 @@
+.body {
+  width: 100%;
+  height: 100vh;
+  background-color: #fafafa;
+}
+
+.nav {
+  background-color: #e5f3fd;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  min-height: 100px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  min-width: 300px;
+}
+
+.text-field {
+  width: 100%;
+}
