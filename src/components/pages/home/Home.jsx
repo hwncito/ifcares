@@ -1,6 +1,8 @@
-import React from 'react';
-import { Button, TextField } from '@mui/material';
-import './Home.css';
+import "./Home.css";
+import { Button, TextField } from "@mui/material";
+import { Link } from "react-router-dom";
+import StudentsTable from "../../common/studentsTable/StudentsTable";
+
 
 const Home = () => {
   return (
@@ -20,16 +22,20 @@ const Home = () => {
               />
             </div>
           </div>
-          <Button
-            variant="contained"
-            size="small"
-            style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
-          >
-            Add Student
-          </Button>
+          <Link to="/addStudent">
+            <Button
+              variant="contained"
+              size="small"
+              style={{ textTransform: "capitalize", fontWeight: "bold" }}
+            >
+              Add Student
+            </Button>
+          </Link>
         </div>
       </div>
-      <div></div>
+      <div>
+        <StudentsTable />
+      </div>
     </div>
   );
 };

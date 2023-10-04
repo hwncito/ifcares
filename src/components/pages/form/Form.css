@@ -20,6 +20,14 @@
   box-shadow: inset 0px 0px 10px;
 }
 
-.textField {
+.text-field {
   width: 75%;
+}
+
+.button-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 35%;
 }
