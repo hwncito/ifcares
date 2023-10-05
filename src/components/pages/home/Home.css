@@ -1,5 +1,6 @@
 .body {
   width: 100%;
+  min-width: 600px;
   height: 100vh;
   background-color: #fafafa;
 }
@@ -19,11 +20,9 @@
   transform: translateX(-50%);
 }
 
-.filter-group {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  min-width: 300px;
+.title{
+  font-weight: bold;
+  font-size: 25px;
 }
 
 .text-field {

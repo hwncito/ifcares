@@ -1,82 +1,86 @@
-import React from "react";
-import "./Form.css";
-import { Button, Select, TextField } from "@mui/material";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import './Form.css';
+import { Button, TextField } from '@mui/material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
+import SitesSelect from '../../common/sitesSelect/SitesSelect';
 
 const Form = () => {
   let initialValues = {
-    name: "",
-    age: "",
-    site: "",
+    name: '',
+    age: '',
+    site: '',
   };
 
   const onSubmit = (data) => {
-    console.log(data);
+    console.log('Form data:', data);
   };
 
-  const { handleSubmit, handleChange, errors } = useFormik({
-    initialValues,
-    validationSchema: Yup.object({
-      name: Yup.string().required("Please enter a name."),
-      age: Yup.number().required("Please enter an age.").positive().integer(),
-    }),
-    onSubmit,
-  });
+  const { handleSubmit, handleChange, errors, values, setFieldValue } =
+    useFormik({
+      initialValues,
+      validationSchema: Yup.object({
+        name: Yup.string().required('Please enter a name.'),
+        age: Yup.number().required('Please enter an age.').positive().integer(),
+        site: Yup.string().required('Please select a Site.'),
+      }),
+      onSubmit,
+    });
+
+  const handleSiteSelection = (selectedSite) => {
+    setFieldValue('site', selectedSite);
+  };
 
   return (
     <div className="body">
       <form className="form-container" onSubmit={handleSubmit}>
-        <h2>Add a New Student</h2>
+        <h2 className="title">Add a New Student</h2>
         <TextField
           className="text-field"
           name="name"
           label="Name"
-          variant="standard"
+          variant="outlined"
           type="text"
           onChange={handleChange}
-          error={errors.name}
+          error={!!errors.name}
           helperText={errors.name}
+          
         />
         <TextField
           className="text-field"
           name="age"
           label="Age"
-          variant="standard"
+          variant="outlined"
           type="number"
           onChange={handleChange}
-          error={errors.age}
+          error={!!errors.age}
           helperText={errors.age}
         />
-        <TextField
-          className="text-field"
-          name="site"
-          select
-          label="Site"
-          variant="standard"
-          type="number"
-          onChange={handleChange}
+        <SitesSelect
+          onSiteSelected={handleSiteSelection}
+          error={!!errors.site}
+          helperText={errors.site}
+          selectedSiteValue={values.site}
         />
         <Button
           type="submit"
           variant="contained"
           size="small"
-          style={{ textTransform: "capitalize", fontWeight: "bold" }}
+          style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
         >
           Add
         </Button>
       </form>
       <div className="button-container">
-      <Link to="/">
-        <Button
-          variant="contained"
-          size="small"
-          style={{ textTransform: "capitalize", fontWeight: "bold" }}
-        >
-          Back
-        </Button>
-      </Link>
+        <Link to="/">
+          <Button
+            variant="contained"
+            size="small"
+            style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
+          >
+            Back
+          </Button>
+        </Link>
       </div>
     </div>
   );
