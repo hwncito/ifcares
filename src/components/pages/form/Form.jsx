@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import SitesSelect from '../../common/sitesSelect/SitesSelect';
+import axios from 'axios';
 
 const Form = () => {
   let initialValues = {
@@ -12,8 +13,30 @@ const Form = () => {
     site: '',
   };
 
+  // Hay que arreglar esto de las peticiones POST, mirar el mensaje de ChatGPT
+  // Para que ya no se mande la informacion en forma de string
+
   const onSubmit = (data) => {
-    console.log('Form data:', data);
+    console.log(data);
+    const GAS_URL =
+      'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyzPGLIwjuacL4nfNqkv7HgUmeJDX5XzrpCe6PQ5WC9LTTs1oDLBxvYKm3pwopMJNzA/exec';
+
+    axios
+      .post(GAS_URL, JSON.stringify(data), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        if (response.data.result === 'success') {
+          console.log('Data sent successfully');
+        } else {
+          console.error('Error in sending data:', response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   const { handleSubmit, handleChange, errors, values, setFieldValue } =
@@ -44,7 +67,6 @@ const Form = () => {
           onChange={handleChange}
           error={!!errors.name}
           helperText={errors.name}
-          
         />
         <TextField
           className="text-field"
