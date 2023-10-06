@@ -1,41 +1,45 @@
-import './Form.css';
-import { Button, TextField } from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
-import SitesSelect from '../../common/sitesSelect/SitesSelect';
-import axios from 'axios';
+import "./Form.css";
+import { Button, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Link } from "react-router-dom";
+import SitesSelect from "../../common/sitesSelect/SitesSelect";
+import axios from "axios";
 
 const Form = () => {
   let initialValues = {
-    name: '',
-    age: '',
-    site: '',
+    name: "",
+    age: "",
+    site: "",
   };
-
-  // Hay que arreglar esto de las peticiones POST, mirar el mensaje de ChatGPT
-  // Para que ya no se mande la informacion en forma de string
 
   const onSubmit = (data) => {
     console.log(data);
     const GAS_URL =
-      'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyzPGLIwjuacL4nfNqkv7HgUmeJDX5XzrpCe6PQ5WC9LTTs1oDLBxvYKm3pwopMJNzA/exec';
+      "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbzZpXl2d_y2nnqm_G22L3AxoyPa7xBK7p_XUHzCE3Gzh15ioX4sQc9wjQkqQdDBcuvG/exec";
+
+    const formattedData = {
+      values: [data.name, data.age, data.site],
+    };
+
+    console.log(formattedData);
 
     axios
-      .post(GAS_URL, JSON.stringify(data), {
+      .post(GAS_URL, JSON.stringify(formattedData), {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          "x-requested-with": "XMLHttpRequest",
         },
       })
       .then((response) => {
-        if (response.data.result === 'success') {
-          console.log('Data sent successfully');
+        if (response.data.result === "success") {
+          console.log("Data sent successfully");
         } else {
-          console.error('Error in sending data:', response.data.message);
+          console.error("Error in sending data:", response.data.message);
         }
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
       });
   };
 
@@ -43,15 +47,15 @@ const Form = () => {
     useFormik({
       initialValues,
       validationSchema: Yup.object({
-        name: Yup.string().required('Please enter a name.'),
-        age: Yup.number().required('Please enter an age.').positive().integer(),
-        site: Yup.string().required('Please select a Site.'),
+        name: Yup.string().required("Please enter a name."),
+        age: Yup.number().required("Please enter an age.").positive().integer(),
+        site: Yup.string().required("Please select a Site."),
       }),
       onSubmit,
     });
 
   const handleSiteSelection = (selectedSite) => {
-    setFieldValue('site', selectedSite);
+    setFieldValue("site", selectedSite);
   };
 
   return (
@@ -88,7 +92,7 @@ const Form = () => {
           type="submit"
           variant="contained"
           size="small"
-          style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
+          style={{ textTransform: "capitalize", fontWeight: "bold" }}
         >
           Add
         </Button>
@@ -98,7 +102,7 @@ const Form = () => {
           <Button
             variant="contained"
             size="small"
-            style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
+            style={{ textTransform: "capitalize", fontWeight: "bold" }}
           >
             Back
           </Button>
