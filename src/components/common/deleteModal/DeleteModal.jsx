@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'flowbite-react';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import axios from 'axios';
+import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
+import DeleteToast from '../deleteToast/DeleteToast';
 
 const DeleteModal = ({ onClose, student }) => {
   const [openModal, setOpenModal] = useState('pop-up');
+  const [loading, setLoading] = useState(false);
+  const [toastType, setToastType] = useState(null);
   const props = { openModal, setOpenModal };
 
   const handleCloseModal = () => {
@@ -13,6 +17,7 @@ const DeleteModal = ({ onClose, student }) => {
   };
 
   const handleDeleteStudent = () => {
+    setLoading(true);
     const deleteData = {
       actionType: 'delete',
       values: [student.name, student.site],
@@ -32,11 +37,17 @@ const DeleteModal = ({ onClose, student }) => {
       })
       .then((response) => {
         console.log('Student deleted successfully:', response.data);
-        handleCloseModal();
+        setLoading(false);
+        setToastType('success');
+        setTimeout(handleCloseModal, 5000);
+        setTimeout(() => window.location.reload(), 500);
       })
       .catch((error) => {
         console.error('Error deleting student:', error);
-        handleCloseModal();
+        setLoading(false);
+        setToastType('error');
+        setTimeout(handleCloseModal, 5000);
+        setTimeout(() => window.location.reload(), 500);
       });
   };
 
@@ -49,22 +60,36 @@ const DeleteModal = ({ onClose, student }) => {
         onClose={() => props.setOpenModal(undefined)}
       >
         <Modal.Footer />
-        <Modal.Body>
-          <div className="text-center">
-            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
-            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-              Are you sure you want to <b>delete</b> {student.name}?
-            </h3>
-            <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={handleDeleteStudent}>
-                Yes, I'm sure
-              </Button>
-              <Button color="gray" onClick={handleCloseModal}>
-                No, cancel
-              </Button>
-            </div>
+        {toastType ? (
+          <div className="flex items-center justify-center h-full mb-8">
+            <DeleteToast type={toastType} />
           </div>
-        </Modal.Body>
+        ) : (
+          <>
+            <Modal.Body>
+              <div className="text-center">
+                {loading ? (
+                  <LoadingSpinner />
+                ) : (
+                  <>
+                    <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                    <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                      Are you sure you want to <b>delete</b> {student.name}?
+                    </h3>
+                    <div className="flex justify-center gap-4">
+                      <Button color="failure" onClick={handleDeleteStudent}>
+                        Yes, I'm sure
+                      </Button>
+                      <Button color="gray" onClick={handleCloseModal}>
+                        No, cancel
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </Modal.Body>
+          </>
+        )}
       </Modal>
     </>
   );

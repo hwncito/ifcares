@@ -24,7 +24,7 @@ const StudentsTable = () => {
       .then(([studentsResponse, sitesResponse]) => {
         setStudents(studentsResponse.data);
         setSites(sitesResponse.data);
-        setLoading(false); // Set loading to false once both responses are received
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error:', error);
