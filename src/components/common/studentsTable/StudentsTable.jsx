@@ -1,25 +1,25 @@
-import React from "react";
-import "./StudentsTable.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Table } from "flowbite-react";
-import StudentsRow from "../studentsRow/StudentsRow";
-import SitesDropdown from "../sitesDropdown/SitesDropdown";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
+import React from 'react';
+import './StudentsTable.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Table } from 'flowbite-react';
+import StudentsRow from '../studentsRow/StudentsRow';
+import SitesDropdown from '../sitesDropdown/SitesDropdown';
+import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
 
 const StudentsTable = () => {
   const [students, setStudents] = useState([]);
   const [sites, setSites] = useState([]);
-  const [selectedSite, setSelectedSite] = useState("");
+  const [selectedSite, setSelectedSite] = useState('');
   const [loading, setLoading] = useState(true);
 
   const GAS_URL =
-    "https://script.google.com/macros/s/AKfycbzZpXl2d_y2nnqm_G22L3AxoyPa7xBK7p_XUHzCE3Gzh15ioX4sQc9wjQkqQdDBcuvG/exec";
+    'https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec';
 
   useEffect(() => {
     Promise.all([
-      axios.get(GAS_URL + "?type=students"),
-      axios.get(GAS_URL + "?type=sites"),
+      axios.get(GAS_URL + '?type=students'),
+      axios.get(GAS_URL + '?type=sites'),
     ])
       .then(([studentsResponse, sitesResponse]) => {
         setStudents(studentsResponse.data);
@@ -27,7 +27,7 @@ const StudentsTable = () => {
         setLoading(false); // Set loading to false once both responses are received
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
         setLoading(false);
       });
   }, []);
@@ -52,6 +52,9 @@ const StudentsTable = () => {
               <Table.HeadCell>Site</Table.HeadCell>
               <Table.HeadCell>
                 <span className="sr-only">Edit</span>
+              </Table.HeadCell>
+              <Table.HeadCell>
+                <span className="sr-only">Delete</span>
               </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
