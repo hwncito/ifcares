@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { Table } from "flowbite-react";
-import "./StudentsRow.css";
-import DeleteModal from "../deleteModal/DeleteModal";
-import { useState } from "react";
-import SitesSelect from "../sitesSelect/SitesSelect";
-import axios from "axios";
-import SavingModal from "../savingModal/SavingModal";
+import { Table } from 'flowbite-react';
+import './StudentsRow.css';
+import DeleteModal from '../deleteModal/DeleteModal';
+import { useState } from 'react';
+import SitesSelect from '../sitesSelect/SitesSelect';
+import axios from 'axios';
+import SavingModal from '../savingModal/SavingModal';
 
 export default function StudentsRow({ student }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -76,10 +76,10 @@ export default function StudentsRow({ student }) {
             onClick={() => {
               if (isEditing) {
                 setLoading(true);
-                setOpenModal("pop-up");
+                setOpenModal('pop-up');
 
                 const formattedData = {
-                  actionType: "edit",
+                  actionType: 'edit',
                   values: [
                     student.name,
                     student.site,
@@ -93,33 +93,41 @@ export default function StudentsRow({ student }) {
 
                 axios
                   .post(
-                    "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbxMWDqUjbFKvv46u13RV1GwzthjSkucPTTsZLH0l_CxJY3vtmZu0gWMsEjLxFL_KK-r/exec",
+                    'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbxMWDqUjbFKvv46u13RV1GwzthjSkucPTTsZLH0l_CxJY3vtmZu0gWMsEjLxFL_KK-r/exec',
                     JSON.stringify(formattedData),
                     {
                       headers: {
-                        "Content-Type": "application/json",
-                        "x-requested-with": "XMLHttpRequest",
+                        'Content-Type': 'application/json',
+                        'x-requested-with': 'XMLHttpRequest',
                       },
                     }
                   )
                   .then((response) => {
-                    console.log("success:", response);
+                    console.log('success:', response);
                     setLoading(false);
-                    setOpenModal("success");
+                    setOpenModal('success');
+                    setTimeout(() => {
+                      setOpenModal(null);
+                    }, 3000);
+                    setTimeout(() => window.location.reload(), 3000);
                     // hacer lo del refresh
                     // Handle successful response
                   })
                   .catch((error) => {
-                    console.log("error:", error);
+                    console.log('error:', error);
                     setLoading(false);
-                    setOpenModal("error");
+                    setOpenModal('error');
+                    setTimeout(() => {
+                      setOpenModal(null); // Hide the toast after a few seconds
+                    }, 3000);
+                    setTimeout(() => window.location.reload(), 3000);
                     // Handle errors
                   });
               }
               setIsEditing(!isEditing);
             }}
           >
-            <span>{isEditing ? "Save" : "Edit"}</span>
+            <span>{isEditing ? 'Save' : 'Edit'}</span>
           </p>
         </Table.Cell>
         <Table.Cell>
