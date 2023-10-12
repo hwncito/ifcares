@@ -5,7 +5,7 @@ import Form from './components/pages/form/Form';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <BrowserRouter basename={"/ifcares"}>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/addStudent" element={<Form />} />
