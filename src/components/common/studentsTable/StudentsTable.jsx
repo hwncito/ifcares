@@ -6,6 +6,8 @@ import { Table } from 'flowbite-react';
 import StudentsRow from '../studentsRow/StudentsRow';
 import SitesDropdown from '../sitesDropdown/SitesDropdown';
 import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const StudentsTable = () => {
   const [students, setStudents] = useState([]);
@@ -34,26 +36,44 @@ const StudentsTable = () => {
 
   return (
     <div className="table-container">
+      <div className="header-container">
+          <SitesDropdown
+            sites={sites}
+            onSiteSelected={setSelectedSite}
+            selectedSite={selectedSite}
+          />
+          <Link to="/addStudent">
+            <Button
+              variant="contained"
+              style={{
+                textTransform: 'capitalize',
+                fontWeight: 'bold',
+                backgroundColor: '#5D24FF',
+                borderRadius: '13px',
+                minWidth: '120px',
+                maxHeight: '30px',
+                boxShadow:'none',
+              }}
+            >
+              Add Student
+            </Button>
+          </Link>
+          </div>
       {loading ? (
         <div className="loading-spinner">
           <LoadingSpinner />
         </div>
       ) : (
         <>
-          <SitesDropdown
-            sites={sites}
-            onSiteSelected={setSelectedSite}
-            selectedSite={selectedSite}
-          />
           <Table hoverable>
-            <Table.Head>
-              <Table.HeadCell>Student Name</Table.HeadCell>
-              <Table.HeadCell>Age</Table.HeadCell>
-              <Table.HeadCell>Site</Table.HeadCell>
-              <Table.HeadCell>
+            <Table.Head >
+              <Table.HeadCell className='headcell'>Student Name</Table.HeadCell>
+              <Table.HeadCell className='headcell'>Age</Table.HeadCell>
+              <Table.HeadCell className='headcell'>Site</Table.HeadCell>
+              <Table.HeadCell className='headcell'>
                 <span className="sr-only">Edit</span>
               </Table.HeadCell>
-              <Table.HeadCell>
+              <Table.HeadCell className='headcell'>
                 <span className="sr-only">Delete</span>
               </Table.HeadCell>
             </Table.Head>
