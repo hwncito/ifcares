@@ -5,7 +5,7 @@ import Form from './components/pages/form/Form';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename={"ifcares"}>
+      <BrowserRouter basename={""}>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/addStudent" element={<Form />} />
