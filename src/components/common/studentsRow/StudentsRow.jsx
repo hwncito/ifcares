@@ -6,6 +6,7 @@ import DeleteModal from "../deleteModal/DeleteModal";
 import { useState } from "react";
 import SitesSelect from "../sitesSelect/SitesSelect";
 import axios from "axios";
+import SavingModal from "../savingModal/SavingModal";
 
 export default function StudentsRow({ student }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -15,9 +16,17 @@ export default function StudentsRow({ student }) {
     age: student.age,
     site: student.site,
   });
+  const [openModal, setOpenModal] = useState(undefined);
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
+      <SavingModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        loading={loading}
+      />
+
       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
           {isEditing ? (
@@ -62,10 +71,13 @@ export default function StudentsRow({ student }) {
           )}
         </Table.Cell>
         <Table.Cell>
-          <a
+          <p
             className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 cursor-pointer"
             onClick={() => {
               if (isEditing) {
+                setLoading(true);
+                setOpenModal("pop-up");
+
                 const formattedData = {
                   actionType: "edit",
                   values: [
@@ -92,18 +104,23 @@ export default function StudentsRow({ student }) {
                   )
                   .then((response) => {
                     console.log("success:", response);
-                    // Handle successful response, maybe show a message to the user?
+                    setLoading(false);
+                    setOpenModal("success");
+                    // hacer lo del refresh
+                    // Handle successful response
                   })
                   .catch((error) => {
                     console.log("error:", error);
-                    // Handle errors, maybe show an error message to the user?
+                    setLoading(false);
+                    setOpenModal("error");
+                    // Handle errors
                   });
               }
               setIsEditing(!isEditing);
             }}
           >
-            <p>{isEditing ? "Save" : "Edit"}</p>
-          </a>
+            <span>{isEditing ? "Save" : "Edit"}</span>
+          </p>
         </Table.Cell>
         <Table.Cell>
           <button

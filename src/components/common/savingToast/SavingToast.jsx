@@ -1,17 +1,34 @@
 import React from "react";
 import { Toast } from "flowbite-react";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
+import { HiCheck, HiX } from "react-icons/hi";
 
-const SavingToast = () => {
-  return (
-    <Toast>
-    <LoadingSpinner />
-    <div className="ml-3 text-sm font-normal">
-      Saving changes...
-    </div>
-    <Toast.Toggle />
-  </Toast>
-  )
-}
+const SavingToast = ({type}) => {
+  if (type === "success") {
+    return (
+      <Toast>
+        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+          <HiCheck className="h-5 w-5" />
+        </div>
+        <div className="ml-3 text-sm font-normal">
+          Student edited successfully.
+        </div>
+        <Toast.Toggle />
+      </Toast>
+    );
+  } else if (type === "error") {
+    return (
+      <Toast>
+        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200">
+          <HiX className="h-5 w-5" />
+        </div>
+        <div className="ml-3 text-sm font-normal">
+          Student could not be edited. Try again later.
+        </div>
+        <Toast.Toggle />
+      </Toast>
+    );
+  }
+  return null;
+};
 
 export default SavingToast
