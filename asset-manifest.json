@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/ifcares/static/css/main.4c42e3bb.css",
-    "main.js": "/ifcares/static/js/main.4082980f.js",
-    "index.html": "/ifcares/index.html",
-    "main.4c42e3bb.css.map": "/ifcares/static/css/main.4c42e3bb.css.map",
-    "main.4082980f.js.map": "/ifcares/static/js/main.4082980f.js.map"
+    "main.css": "https://hwncito.github.io/ifcares/static/css/main.4c42e3bb.css",
+    "main.js": "https://hwncito.github.io/ifcares/static/js/main.4082980f.js",
+    "index.html": "https://hwncito.github.io/ifcares/index.html",
+    "main.4c42e3bb.css.map": "https://hwncito.github.io/ifcares/static/css/main.4c42e3bb.css.map",
+    "main.4082980f.js.map": "https://hwncito.github.io/ifcares/static/js/main.4082980f.js.map"
   },
   "entrypoints": [
     "static/css/main.4c42e3bb.css",
