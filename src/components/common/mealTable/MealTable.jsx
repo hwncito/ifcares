@@ -1,14 +1,12 @@
-import React from "react";
-import { Checkbox, Table } from "flowbite-react";
-import MealTableRow from "../mealTableRow/MealTableRow";
+import React from 'react';
+import { Table } from 'flowbite-react';
+import MealTableRow from '../mealTableRow/MealTableRow';
 
 const MealTable = () => {
   return (
     <Table hoverable>
       <Table.Head>
-        <Table.HeadCell className="p-4">
-          
-        </Table.HeadCell>
+        <Table.HeadCell className="p-4"></Table.HeadCell>
         <Table.HeadCell>
           Participant's Name (First & Last Name Required)
         </Table.HeadCell>
