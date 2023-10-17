@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Table } from 'flowbite-react';
-import './StudentsRow.css';
-import DeleteModal from '../deleteModal/DeleteModal';
-import { useState } from 'react';
-import SitesSelect from '../sitesSelect/SitesSelect';
-import axios from 'axios';
-import SavingModal from '../savingModal/SavingModal';
+import { Table } from "flowbite-react";
+import "./StudentsRow.css";
+import DeleteModal from "../deleteModal/DeleteModal";
+import { useState } from "react";
+import SitesSelect from "../sitesSelect/SitesSelect";
+import axios from "axios";
+import SavingModal from "../savingModal/SavingModal";
 
 export default function StudentsRow({ student }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -28,10 +28,11 @@ export default function StudentsRow({ student }) {
       />
 
       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+        <Table.Cell className="row-style">
           {isEditing ? (
             <input
-              className="border rounded-md px-3 py-2 w-full focus:border-blue-400 focus:outline-none"
+            type="text"
+            className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:border-violet-500 edit-input"
               value={editedStudent.name}
               onChange={(e) =>
                 setEditedStudent({ ...editedStudent, name: e.target.value })
@@ -41,11 +42,12 @@ export default function StudentsRow({ student }) {
             student.name
           )}
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell className="row-style">
           {isEditing ? (
             <input
               type="number"
-              className="border rounded-md px-3 py-2 w-full focus:border-blue-400 focus:outline-none"
+              // className="border rounded-md px-3 py-2 w-full focus:border-violet-500 focus:outline-none"
+              className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:border-violet-500 edit-input"
               value={editedStudent.age}
               onChange={(e) =>
                 setEditedStudent({ ...editedStudent, age: e.target.value })
@@ -55,9 +57,11 @@ export default function StudentsRow({ student }) {
             student.age
           )}
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell className="row-style">
           {isEditing ? (
             <SitesSelect
+            isStudentsRow={true}
+            className="edit-select"
               selectedSiteValue={editedStudent.site}
               onSiteSelected={(site) =>
                 setEditedStudent((prevStudent) => ({
@@ -72,14 +76,14 @@ export default function StudentsRow({ student }) {
         </Table.Cell>
         <Table.Cell>
           <p
-            className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 cursor-pointer"
+            className="font-medium text-violet-500 hover:underline dark:text-violet-500 cursor-pointer"
             onClick={() => {
               if (isEditing) {
                 setLoading(true);
-                setOpenModal('pop-up');
+                setOpenModal("pop-up");
 
                 const formattedData = {
-                  actionType: 'edit',
+                  actionType: "edit",
                   values: [
                     student.name,
                     student.site,
@@ -93,19 +97,19 @@ export default function StudentsRow({ student }) {
 
                 axios
                   .post(
-                    'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbxMWDqUjbFKvv46u13RV1GwzthjSkucPTTsZLH0l_CxJY3vtmZu0gWMsEjLxFL_KK-r/exec',
+                    "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbxMWDqUjbFKvv46u13RV1GwzthjSkucPTTsZLH0l_CxJY3vtmZu0gWMsEjLxFL_KK-r/exec",
                     JSON.stringify(formattedData),
                     {
                       headers: {
-                        'Content-Type': 'application/json',
-                        'x-requested-with': 'XMLHttpRequest',
+                        "Content-Type": "application/json",
+                        "x-requested-with": "XMLHttpRequest",
                       },
                     }
                   )
                   .then((response) => {
-                    console.log('success:', response);
+                    console.log("success:", response);
                     setLoading(false);
-                    setOpenModal('success');
+                    setOpenModal("success");
                     setTimeout(() => {
                       setOpenModal(null);
                     }, 3000);
@@ -114,9 +118,9 @@ export default function StudentsRow({ student }) {
                     // Handle successful response
                   })
                   .catch((error) => {
-                    console.log('error:', error);
+                    console.log("error:", error);
                     setLoading(false);
-                    setOpenModal('error');
+                    setOpenModal("error");
                     setTimeout(() => {
                       setOpenModal(null); // Hide the toast after a few seconds
                     }, 3000);
@@ -127,7 +131,7 @@ export default function StudentsRow({ student }) {
               setIsEditing(!isEditing);
             }}
           >
-            <span>{isEditing ? 'Save' : 'Edit'}</span>
+            <span className="editing-style">{isEditing ? "SAVE" : "EDIT"}</span>
           </p>
         </Table.Cell>
         <Table.Cell>
@@ -135,7 +139,7 @@ export default function StudentsRow({ student }) {
             className="font-medium text-red-600 hover:underline dark:text-red-500"
             onClick={() => setShowDeleteModal(true)}
           >
-            Delete
+            DELETE
           </button>
         </Table.Cell>
       </Table.Row>

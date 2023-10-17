@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'flowbite-react';
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import axios from 'axios';
-import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
-import DeleteToast from '../deleteToast/DeleteToast';
+import React, { useState } from "react";
+import { Button, Modal } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import axios from "axios";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
+import DeleteToast from "../deleteToast/DeleteToast";
 
 const DeleteModal = ({ onClose, student }) => {
-  const [openModal, setOpenModal] = useState('pop-up');
+  const [openModal, setOpenModal] = useState("pop-up");
   const [loading, setLoading] = useState(false);
   const [toastType, setToastType] = useState(null);
   const props = { openModal, setOpenModal };
@@ -19,33 +19,33 @@ const DeleteModal = ({ onClose, student }) => {
   const handleDeleteStudent = () => {
     setLoading(true);
     const deleteData = {
-      actionType: 'delete',
+      actionType: "delete",
       values: [student.name, student.site],
     };
 
     console.log(deleteData);
 
     const GAS_DELETE_URL =
-      'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec';
+      "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec";
 
     axios
       .post(GAS_DELETE_URL, JSON.stringify(deleteData), {
         headers: {
-          'Content-Type': 'application/json',
-          'x-requested-with': 'XMLHttpRequest',
+          "Content-Type": "application/json",
+          "x-requested-with": "XMLHttpRequest",
         },
       })
       .then((response) => {
-        console.log('Student deleted successfully:', response.data);
+        console.log("Student deleted successfully:", response.data);
         setLoading(false);
-        setToastType('success');
+        setToastType("success");
         setTimeout(handleCloseModal, 4000);
         setTimeout(() => window.location.reload(), 4000);
       })
       .catch((error) => {
-        console.error('Error deleting student:', error);
+        console.error("Error deleting student:", error);
         setLoading(false);
-        setToastType('error');
+        setToastType("error");
         setTimeout(handleCloseModal, 4000);
         setTimeout(() => window.location.reload(), 4000);
       });
@@ -54,7 +54,7 @@ const DeleteModal = ({ onClose, student }) => {
   return (
     <>
       <Modal
-        show={props.openModal === 'pop-up'}
+        show={props.openModal === "pop-up"}
         size="md"
         popup
         onClose={() => props.setOpenModal(undefined)}
@@ -66,10 +66,12 @@ const DeleteModal = ({ onClose, student }) => {
           </div>
         ) : (
           <>
-            <Modal.Body>
+            <Modal.Body className="modal-body">
               <div className="text-center">
                 {loading ? (
-                  <LoadingSpinner />
+                  <div className="loading-spinner">
+                    <LoadingSpinner />
+                  </div>
                 ) : (
                   <>
                     <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />

@@ -13,14 +13,9 @@
   left: 50%;
   transform: translateX(-50%);
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   width: 80%;
-  min-height: 500px;
-}
-
-.loading-spinner {
-  position: relative;
-  top: 300px;
+  min-height: 800px;
 }
 
 .headcell {

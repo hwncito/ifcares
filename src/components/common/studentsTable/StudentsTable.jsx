@@ -50,8 +50,8 @@ const StudentsTable = () => {
                 fontWeight: 'bold',
                 backgroundColor: '#5D24FF',
                 borderRadius: '13px',
-                minWidth: '120px',
-                maxHeight: '30px',
+                minWidth: '130px',
+                minHeight: '40px',
                 boxShadow:'none',
               }}
             >
@@ -65,7 +65,7 @@ const StudentsTable = () => {
         </div>
       ) : (
         <>
-          <Table hoverable>
+          <Table striped>
             <Table.Head >
               <Table.HeadCell className='headcell'>Student Name</Table.HeadCell>
               <Table.HeadCell className='headcell'>Age</Table.HeadCell>

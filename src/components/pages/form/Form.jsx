@@ -1,32 +1,32 @@
-import './Form.css';
-import { Button, TextField } from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
-import SitesSelect from '../../common/sitesSelect/SitesSelect';
-import axios from 'axios';
-import LoadingSpinner from '../../common/loadingSpinner/LoadingSpinner';
-import { useState } from 'react';
-import FormToast from '../../common/formToast/FormToast';
+import "./Form.css";
+import { Button, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Link } from "react-router-dom";
+import SitesSelect from "../../common/sitesSelect/SitesSelect";
+import axios from "axios";
+import LoadingSpinner from "../../common/loadingSpinner/LoadingSpinner";
+import { useState } from "react";
+import FormToast from "../../common/formToast/FormToast";
 
 const Form = () => {
   let initialValues = {
-    name: '',
-    age: '',
-    site: '',
+    name: "",
+    age: "",
+    site: "",
   };
 
   const [submitting, setSubmitting] = useState(false);
-  const [toastType, setToastType] = useState('');
+  const [toastType, setToastType] = useState("");
 
   const onSubmit = (data) => {
     setSubmitting(true);
     console.log(data);
     const GAS_URL =
-      'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec';
+      "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec";
 
     const formattedData = {
-      actionType: 'add',
+      actionType: "add",
       values: [data.name, data.age, data.site],
     };
 
@@ -35,24 +35,24 @@ const Form = () => {
     axios
       .post(GAS_URL, JSON.stringify(formattedData), {
         headers: {
-          'Content-Type': 'application/json',
-          'x-requested-with': 'XMLHttpRequest',
+          "Content-Type": "application/json",
+          "x-requested-with": "XMLHttpRequest",
         },
       })
       .then((response) => {
-        if (response.data.result === 'success') {
-          console.log('Data sent successfully');
-          setToastType('success');
+        if (response.data.result === "success") {
+          console.log("Data sent successfully");
+          setToastType("success");
           setSubmitting(false);
         } else {
-          console.error('Error in sending data:', response.data.message);
-          setToastType('error');
+          console.error("Error in sending data:", response.data.message);
+          setToastType("error");
           setSubmitting(false);
         }
       })
       .catch((error) => {
-        console.error('Error:', error);
-        setToastType('error');
+        console.error("Error:", error);
+        setToastType("error");
         setSubmitting(false);
       });
   };
@@ -61,15 +61,15 @@ const Form = () => {
     useFormik({
       initialValues,
       validationSchema: Yup.object({
-        name: Yup.string().required('Please enter a name.'),
-        age: Yup.number().required('Please enter an age.').positive().integer(),
-        site: Yup.string().required('Please select a Site.'),
+        name: Yup.string().required("Please enter a name."),
+        age: Yup.number().required("Please enter an age.").positive().integer(),
+        site: Yup.string().required("Please select a Site."),
       }),
       onSubmit,
     });
 
   const handleSiteSelection = (selectedSite) => {
-    setFieldValue('site', selectedSite);
+    setFieldValue("site", selectedSite);
   };
 
   return (
@@ -111,20 +111,28 @@ const Form = () => {
             <Button
               type="submit"
               variant="contained"
-              size="small"
-              style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
+              style={{
+                textTransform: "capitalize",
+                fontWeight: "bold",
+                width: "115px",
+                height: "40px",
+                fontSize: '14px',
+                borderRadius: "13px",
+                background: "#5D24FF",
+                boxShadow: "0px 4px 10px 2px rgba(0, 0, 0, 0.25)",
+              }}
             >
-              Add
+              Submit
             </Button>
           </form>
 
           <div className="toast-container">
-            {toastType === 'success' && (
+            {toastType === "success" && (
               <div className="your-toast-wrapper-class">
                 <FormToast type={toastType} />
               </div>
             )}
-            {toastType === 'error' && (
+            {toastType === "error" && (
               <div className="your-toast-wrapper-class">
                 <FormToast type={toastType} />
               </div>
@@ -136,7 +144,16 @@ const Form = () => {
               <Button
                 variant="contained"
                 size="small"
-                style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
+                style={{
+                  textTransform: "capitalize",
+                  fontWeight: "bold",
+                  width: "80px",
+                  height: "31px",
+                  fontSize: '13px',
+                  background: "#5D24FF",
+                  boxShadow: "0px 4px 10px 2px rgba(0, 0, 0, 0.25)",
+                  
+                }}
               >
                 Back
               </Button>

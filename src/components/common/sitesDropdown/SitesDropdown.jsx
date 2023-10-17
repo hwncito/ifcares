@@ -9,13 +9,11 @@ const SitesDropdown = ({ sites, onSiteSelected, selectedSite }) => {
       dismissOnClick={true}
       label={selectedSite || 'Select Site'}
       style={{
-        maxHeight: '30px',
         minWidth: '185px',
         borderRadius: '13px',
-        background: '#f0f0f0',
         flexShrink: 0,
         color: '#000000',
-        backgroundColor: '#F0F0F0',
+        backgroundColor: '#FAFAFA',
         marginRight:'25px'
       }}
     >
