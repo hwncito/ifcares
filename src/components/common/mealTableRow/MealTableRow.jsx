@@ -1,14 +1,14 @@
 import React from "react";
 import { Checkbox, Table } from "flowbite-react";
 
-const MealTableRow = () => {
+const MealTableRow = ({ student }) => {
   return (
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-      <Table.Cell></Table.Cell>
+      <Table.Cell>{student.number}</Table.Cell>
       <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-        "Participant's Name (First & Last Name Required)"
+        {student.name}
       </Table.Cell>
-      <Table.Cell>Age</Table.Cell>
+      <Table.Cell>{student.age}</Table.Cell>
       <Table.Cell>
         <Checkbox />
       </Table.Cell>

@@ -1,25 +1,20 @@
-import React from 'react';
-import { Table } from 'flowbite-react';
+import React from "react";
+import { Table } from "flowbite-react";
 
-const MealSiteRow = () => {
+const MealSiteRow = ({ siteData }) => {
   return (
-    // Modify rows to bring API site Answer
+    // if (!siteData) {
+    //   return null; // You can render some loading or default content here
+    // }
 
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
       <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-        Apple MacBook Pro 17"
+        {siteData.name}
       </Table.Cell>
-      <Table.Cell>Sliver</Table.Cell>
-      <Table.Cell>Laptop</Table.Cell>
-      <Table.Cell>$2999</Table.Cell>
-      <Table.Cell>
-        <a
-          className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-          href="/tables"
-        >
-          <p>Edit</p>
-        </a>
-      </Table.Cell>
+      <Table.Cell>{siteData.ceId}</Table.Cell>
+      <Table.Cell>{siteData.siteName}</Table.Cell>
+      <Table.Cell>{siteData.siteNumber}</Table.Cell>
+      <Table.Cell>{siteData.date}</Table.Cell>
     </Table.Row>
   );
 };
