@@ -37,6 +37,23 @@ const StudentsTable = () => {
   return (
     <div className="table-container">
       <div className="header-container">
+      <Link to="/mealCount">
+            <Button
+              variant="contained"
+              style={{
+                textTransform: 'capitalize',
+                fontWeight: 'bold',
+                backgroundColor: '#3DED97',
+                borderRadius: '13px',
+                minWidth: '130px',
+                minHeight: '40px',
+                boxShadow:'none',
+              }}
+            >
+              Meal Count
+            </Button>
+          </Link>
+        <div className='drop-button-container'>
           <SitesDropdown
             sites={sites}
             onSiteSelected={setSelectedSite}
@@ -58,6 +75,7 @@ const StudentsTable = () => {
               Add Student
             </Button>
           </Link>
+          </div>
           </div>
       {loading ? (
         <div className="loading-spinner">

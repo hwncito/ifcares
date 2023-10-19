@@ -77,6 +77,8 @@ const MealSite = () => {
           <Table.HeadCell>Name of Site</Table.HeadCell>
           <Table.HeadCell>Site #</Table.HeadCell>
           <Table.HeadCell>Date (mm/dd/yyyy)</Table.HeadCell>
+          <Table.HeadCell>In</Table.HeadCell>
+          <Table.HeadCell>Out</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           <MealSiteRow siteData={siteData} />
@@ -84,6 +86,7 @@ const MealSite = () => {
       </Table>
       <br />
       <MealTable studentData={studentData} />
+      
     </>
   );
 };
