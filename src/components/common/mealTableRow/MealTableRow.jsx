@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Checkbox, Table } from "flowbite-react";
 
 const MealTableRow = ({
@@ -8,8 +8,29 @@ const MealTableRow = ({
   setLunchCount,
   setSnackCount,
   setSupperCount,
+  onCheckboxChange,
 }) => {
+  const [checkboxState, setCheckboxState] = useState({
+    attendance: false,
+    breakfast: false,
+    lunch: false,
+    snack: false,
+    supper: false,
+  });
+
   const handleCheckboxChange = (category, checked) => {
+
+    const updatedCheckboxState = {
+      ...checkboxState,
+      [category]: checked,
+    };
+  
+    // Update the local state
+    setCheckboxState(updatedCheckboxState);
+  
+    // Pass the updated state to the parent component
+    onCheckboxChange(student.number, updatedCheckboxState);
+
     switch (category) {
       case "attendance":
         setAttendanceCount((prevCount) =>
@@ -45,19 +66,19 @@ const MealTableRow = ({
       </Table.Cell>
       <Table.Cell>{student.age}</Table.Cell>
       <Table.Cell>
-        <Checkbox onChange={(event) => handleCheckboxChange("attendance", event.target.checked)} />
+        <Checkbox  checked={checkboxState.attendance} onChange={(event) => handleCheckboxChange("attendance", event.target.checked)} />
       </Table.Cell>
       <Table.Cell>
-        <Checkbox onChange={(event) => handleCheckboxChange("breakfast", event.target.checked)} />
+        <Checkbox  checked={checkboxState.breakfast} onChange={(event) => handleCheckboxChange("breakfast", event.target.checked)} />
       </Table.Cell>
       <Table.Cell>
-        <Checkbox onChange={(event) => handleCheckboxChange("lunch", event.target.checked)} />
+        <Checkbox  checked={checkboxState.lunch} onChange={(event) => handleCheckboxChange("lunch", event.target.checked)} />
       </Table.Cell>
       <Table.Cell>
-        <Checkbox onChange={(event) => handleCheckboxChange("snack", event.target.checked)} />
+        <Checkbox checked={checkboxState.snack} onChange={(event) => handleCheckboxChange("snack", event.target.checked)} />
       </Table.Cell>
       <Table.Cell>
-        <Checkbox onChange={(event) => handleCheckboxChange("supper", event.target.checked)} />
+        <Checkbox checked={checkboxState.supper} onChange={(event) => handleCheckboxChange("supper", event.target.checked)} />
       </Table.Cell>
     </Table.Row>
   );
