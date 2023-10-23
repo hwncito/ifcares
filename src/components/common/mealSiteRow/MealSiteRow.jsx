@@ -1,7 +1,5 @@
 import React from "react";
 import { Table } from "flowbite-react";
-import DateSelect from "../dateSelect/DateSelect";
-import TimeSelect from "../timeSelect/TimeSelect";
 
 const MealSiteRow = ({ siteData }) => {
   return (
@@ -16,15 +14,6 @@ const MealSiteRow = ({ siteData }) => {
       <Table.Cell>{siteData.ceId}</Table.Cell>
       <Table.Cell>{siteData.siteName}</Table.Cell>
       <Table.Cell>{siteData.siteNumber}</Table.Cell>
-      <Table.Cell>
-        <DateSelect />
-      </Table.Cell>
-      <Table.Cell>
-        <TimeSelect />
-      </Table.Cell>
-      <Table.Cell>
-        <TimeSelect />
-      </Table.Cell>
     </Table.Row>
   );
 };

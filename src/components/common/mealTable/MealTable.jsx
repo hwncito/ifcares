@@ -1,9 +1,17 @@
+import MealTableModal from '../mealTableModal/MealTableModal';
 import { Table } from 'flowbite-react';
 import MealTableRow from '../mealTableRow/MealTableRow';
 import { Button } from '@mui/material';
 import React, { useState } from 'react';
 import MealTableCount from '../mealTableZCount/MealTableCount';
 import './MealTable.css';
+//date select
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+//time select
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 const MealTable = ({ studentData }) => {
   if (!Array.isArray(studentData)) {
@@ -17,6 +25,13 @@ const MealTable = ({ studentData }) => {
   const [supperCount, setSupperCount] = useState(0);
 
   const [selectedCheckboxData, setSelectedCheckboxData] = useState({});
+
+  const [formattedData, setFormattedData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime1, setSelectedTime1] = useState(null);
+  const [selectedTime2, setSelectedTime2] = useState(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCheckboxChange = (studentNumber, checkboxState) => {
     setSelectedCheckboxData((prevState) => ({
@@ -41,18 +56,52 @@ const MealTable = ({ studentData }) => {
           selectedCheckboxData[student.number].supper
         );
       } else {
-        // If selectedCheckboxData doesn't exist, add undefined values for checkboxes
+        // If selectedCheckboxData doesn't exist, add false values for checkboxes
         studentData.push(false, false, false, false, false);
       }
 
       return studentData;
     });
 
-    console.log(formattedData);
+    setFormattedData(formattedData);
+
+    setIsModalOpen(true);
   };
 
   return (
     <>
+      <Table>
+        <Table.Head>
+          <Table.HeadCell>Date</Table.HeadCell>
+          <Table.HeadCell>In</Table.HeadCell>
+          <Table.HeadCell>Out</Table.HeadCell>
+        </Table.Head>
+        <Table.Body className="divide-y">
+          <Table.Cell>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['DatePicker']}>
+                <DatePicker value={selectedDate} onChange={setSelectedDate} />
+              </DemoContainer>
+            </LocalizationProvider>
+          </Table.Cell>
+          <Table.Cell>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['TimePicker']}>
+                <TimePicker value={selectedTime1} onChange={setSelectedTime1} />
+              </DemoContainer>
+            </LocalizationProvider>
+          </Table.Cell>
+          <Table.Cell>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={['TimePicker']}>
+                <TimePicker value={selectedTime2} onChange={setSelectedTime2} />
+              </DemoContainer>
+            </LocalizationProvider>
+          </Table.Cell>
+        </Table.Body>
+      </Table>
+      <br />
+      <br />
       <Table hoverable>
         <Table.Head>
           <Table.HeadCell className="p-4">#</Table.HeadCell>
@@ -107,6 +156,16 @@ const MealTable = ({ studentData }) => {
         snackCount={snackCount}
         supperCount={supperCount}
       />
+      {isModalOpen && (
+        <MealTableModal
+          isOpen={isModalOpen}
+          closeModal={() => setIsModalOpen(false)}
+          formattedData={formattedData}
+          selectedDate={selectedDate}
+          selectedTime1={selectedTime1}
+          selectedTime2={selectedTime2}
+        />
+      )}
     </>
   );
 };

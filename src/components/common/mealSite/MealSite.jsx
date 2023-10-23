@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "flowbite-react";
-import MealSiteRow from "../mealSiteRow/MealSiteRow";
-import SitesDropdown from "../sitesDropdown/SitesDropdown";
-import axios from "axios";
-import MealTable from "../mealTable/MealTable";
+import React, { useEffect, useState } from 'react';
+import { Table } from 'flowbite-react';
+import MealSiteRow from '../mealSiteRow/MealSiteRow';
+import SitesDropdown from '../sitesDropdown/SitesDropdown';
+import axios from 'axios';
+import MealTable from '../mealTable/MealTable';
 
 const MealSite = () => {
   const [sites, setSites] = useState([]);
-  const [selectedSite, setSelectedSite] = useState("");
-  const [siteData, setSiteData] = useState("");
-  const [studentData, setStudentData] = useState("");
+  const [selectedSite, setSelectedSite] = useState('');
+  const [siteData, setSiteData] = useState('');
+  const [studentData, setStudentData] = useState('');
 
   const GAS_URL =
-    "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyOKJ9ZLwpQglyu4DPVuIvuGJ_xwWagLgqdKGLIae5Ay-2aAJ6sFjmcotL6P1CyHpJL/exec";
+    'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyOKJ9ZLwpQglyu4DPVuIvuGJ_xwWagLgqdKGLIae5Ay-2aAJ6sFjmcotL6P1CyHpJL/exec';
 
   useEffect(() => {
-    Promise.all([axios.get(GAS_URL + "?type=sites")])
+    Promise.all([axios.get(GAS_URL + '?type=sites')])
       .then(([sitesResponse]) => {
         setSites(sitesResponse.data);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
       });
   }, []);
 
@@ -32,7 +32,7 @@ const MealSite = () => {
         setSiteData(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching site data:", error);
+        console.error('Error fetching site data:', error);
       });
   };
 
@@ -52,7 +52,7 @@ const MealSite = () => {
         setStudentData(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching site data:", error);
+        console.error('Error fetching site data:', error);
       });
   };
 
@@ -76,9 +76,6 @@ const MealSite = () => {
           <Table.HeadCell>CE ID</Table.HeadCell>
           <Table.HeadCell>Name of Site</Table.HeadCell>
           <Table.HeadCell>Site #</Table.HeadCell>
-          <Table.HeadCell>Date (mm/dd/yyyy)</Table.HeadCell>
-          <Table.HeadCell>In</Table.HeadCell>
-          <Table.HeadCell>Out</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           <MealSiteRow siteData={siteData} />
@@ -86,7 +83,6 @@ const MealSite = () => {
       </Table>
       <br />
       <MealTable studentData={studentData} />
-      
     </>
   );
 };
