@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button, Modal } from 'flowbite-react';
+import SignatureComponent from '../signatureComponent/SignatureComponent';
 
 const MealTableModal = ({
   isOpen,
@@ -10,9 +11,15 @@ const MealTableModal = ({
   selectedTime2,
 }) => {
   const [openModal, setOpenModal] = useState(false); // State for modal visibility
+  const signatureComponentRef = useRef(null); // Initialize ref with null
 
   const handleToggleModal = () => {
     setOpenModal(!openModal);
+  };
+
+  const generateSign = (url) => {
+    // Do something with the generated signature URL (url)
+    console.log('Generated Signature URL:', url);
   };
 
   const handleFormSubmit = () => {
@@ -40,13 +47,17 @@ const MealTableModal = ({
     console.log('Selected Time 1:', formatTime(selectedTime1));
     console.log('Selected Time 2:', formatTime(selectedTime2));
 
+    if (signatureComponentRef.current) {
+        signatureComponentRef.current.generateSign();
+      }
+
     // Close the modal
     handleToggleModal();
   };
 
   return (
     <>
-      <Modal show={isOpen} size="md" popup onClose={closeModal}>
+      <Modal show={isOpen} size="xl" popup onClose={closeModal}>
         <Modal.Header />
         <Modal.Body>
           <div className="text-center">
@@ -60,6 +71,9 @@ const MealTableModal = ({
                 prosecution under applicable state or federal laws.
               </b>
             </h3>
+            <SignatureComponent onGenerateSign={generateSign} ref={signatureComponentRef}/>
+            <br />
+            <br />
             <div className="flex justify-center gap-4">
               <Button color="green" onClick={handleFormSubmit}>
                 SUBMIT
