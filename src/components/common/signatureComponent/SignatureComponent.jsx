@@ -31,7 +31,6 @@ const SignatureComponent = ({ onGenerateSign }, ref) => {
           border: 'solid black 1px',
           width: '350px',
           margin: '0 auto',
-          
         }}
       >
         <SignatureCanvas

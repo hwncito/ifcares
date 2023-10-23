@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Button, Modal } from 'flowbite-react';
+import axios from 'axios';
 import SignatureComponent from '../signatureComponent/SignatureComponent';
 
 const MealTableModal = ({
@@ -13,12 +14,15 @@ const MealTableModal = ({
   const [openModal, setOpenModal] = useState(false); // State for modal visibility
   const signatureComponentRef = useRef(null); // Initialize ref with null
 
+  const [signatureURL, setSignatureURL] = useState('');
+
   const handleToggleModal = () => {
     setOpenModal(!openModal);
   };
 
   const generateSign = (url) => {
     // Do something with the generated signature URL (url)
+    setSignatureURL(url);
     console.log('Generated Signature URL:', url);
   };
 
@@ -48,8 +52,25 @@ const MealTableModal = ({
     console.log('Selected Time 2:', formatTime(selectedTime2));
 
     if (signatureComponentRef.current) {
-        signatureComponentRef.current.generateSign();
-      }
+      const formattedSign = signatureComponentRef.current.generateSign();
+    }
+
+    const formattedDate = selectedDate.toISOString();
+    const formattedTime1 = formatTime(selectedTime1);
+    const formattedTime2 = formatTime(selectedTime2);
+
+    const dataObject = {
+      actionType: 'mealCount',
+      values: {
+        data: formattedData,
+        date: formattedDate,
+        timeIn: formattedTime1,
+        timeOut: formattedTime2,
+        Signature: signatureURL,
+      },
+    };
+
+    console.log(dataObject);
 
     // Close the modal
     handleToggleModal();
@@ -71,7 +92,10 @@ const MealTableModal = ({
                 prosecution under applicable state or federal laws.
               </b>
             </h3>
-            <SignatureComponent onGenerateSign={generateSign} ref={signatureComponentRef}/>
+            <SignatureComponent
+              onGenerateSign={generateSign}
+              ref={signatureComponentRef}
+            />
             <br />
             <br />
             <div className="flex justify-center gap-4">
