@@ -16,12 +16,15 @@ const MealTableModal = ({
 
   const [signatureURL, setSignatureURL] = useState('');
 
+  let signData = ''
+
   const handleToggleModal = () => {
     setOpenModal(!openModal);
   };
 
   const generateSign = (url) => {
     // Do something with the generated signature URL (url)
+    signData = url
     setSignatureURL(url);
     console.log('Generated Signature URL:', url);
   };
@@ -66,7 +69,7 @@ const MealTableModal = ({
         date: formattedDate,
         timeIn: formattedTime1,
         timeOut: formattedTime2,
-        Signature: signatureURL,
+        Signature: signData,
       },
     };
 
