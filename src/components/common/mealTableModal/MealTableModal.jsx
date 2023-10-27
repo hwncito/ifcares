@@ -15,7 +15,7 @@ const MealTableModal = ({
   const [openModal, setOpenModal] = useState(false); // State for modal visibility
   const signatureComponentRef = useRef(null); // Initialize ref with null
 
-  const [signatureURL, setSignatureURL] = useState('');
+  // const [signatureURL, setSignatureURL] = useState('');
 
   let signData = '';
 
@@ -26,7 +26,7 @@ const MealTableModal = ({
   const generateSign = (url) => {
     // Do something with the generated signature URL (url)
     signData = url;
-    setSignatureURL(url);
+    // setSignatureURL(url);
     // console.log('Generated Signature URL:', url);
   };
 
@@ -57,7 +57,9 @@ const MealTableModal = ({
 
     if (signatureComponentRef.current) {
       const formattedSign = signatureComponentRef.current.generateSign();
+      console.log(formattedSign)
     }
+    
 
     const formattedDate = selectedDate.toISOString();
     const formattedTime1 = formatTime(selectedTime1);
