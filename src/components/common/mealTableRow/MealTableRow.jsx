@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Checkbox, Table } from 'flowbite-react';
+import './MealTableRow.css';
 
 const MealTableRow = ({
   student,
@@ -58,14 +59,13 @@ const MealTableRow = ({
   };
 
   return (
-    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-      <Table.Cell>{student.number}</Table.Cell>
-      <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-        {student.name}
-      </Table.Cell>
-      <Table.Cell>{student.age}</Table.Cell>
+    <Table.Row>
+      <Table.Cell className="mealTableRow-style">{student.number}</Table.Cell>
+      <Table.Cell className="mealTableRow-style">{student.name}</Table.Cell>
+      <Table.Cell className="mealTableRow-style">{student.age}</Table.Cell>
       <Table.Cell>
         <Checkbox
+          className="green-checkbox"
           checked={checkboxState.attendance}
           onChange={(event) =>
             handleCheckboxChange('attendance', event.target.checked)
@@ -74,6 +74,7 @@ const MealTableRow = ({
       </Table.Cell>
       <Table.Cell>
         <Checkbox
+          className="green-checkbox"
           checked={checkboxState.breakfast}
           onChange={(event) =>
             handleCheckboxChange('breakfast', event.target.checked)
@@ -82,6 +83,7 @@ const MealTableRow = ({
       </Table.Cell>
       <Table.Cell>
         <Checkbox
+          className="green-checkbox"
           checked={checkboxState.lunch}
           onChange={(event) =>
             handleCheckboxChange('lunch', event.target.checked)
@@ -90,6 +92,7 @@ const MealTableRow = ({
       </Table.Cell>
       <Table.Cell>
         <Checkbox
+          className="green-checkbox"
           checked={checkboxState.snack}
           onChange={(event) =>
             handleCheckboxChange('snack', event.target.checked)
@@ -98,6 +101,7 @@ const MealTableRow = ({
       </Table.Cell>
       <Table.Cell>
         <Checkbox
+          className="green-checkbox"
           checked={checkboxState.supper}
           onChange={(event) =>
             handleCheckboxChange('supper', event.target.checked)

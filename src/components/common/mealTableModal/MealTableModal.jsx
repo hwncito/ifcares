@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Button, Modal } from "flowbite-react";
-import axios from "axios";
-import SignatureComponent from "../signatureComponent/SignatureComponent";
+import React, { useRef, useState } from 'react';
+import { Button, Modal } from 'flowbite-react';
+import axios from 'axios';
+import SignatureComponent from '../signatureComponent/SignatureComponent';
 
 const MealTableModal = ({
   isOpen,
@@ -10,13 +10,14 @@ const MealTableModal = ({
   selectedDate,
   selectedTime1,
   selectedTime2,
+  selectedSite,
 }) => {
   const [openModal, setOpenModal] = useState(false); // State for modal visibility
   const signatureComponentRef = useRef(null); // Initialize ref with null
 
-  const [signatureURL, setSignatureURL] = useState("");
+  const [signatureURL, setSignatureURL] = useState('');
 
-  let signData = "";
+  let signData = '';
 
   const handleToggleModal = () => {
     setOpenModal(!openModal);
@@ -26,7 +27,7 @@ const MealTableModal = ({
     // Do something with the generated signature URL (url)
     signData = url;
     setSignatureURL(url);
-    console.log("Generated Signature URL:", url);
+    // console.log('Generated Signature URL:', url);
   };
 
   const handleFormSubmit = () => {
@@ -37,22 +38,22 @@ const MealTableModal = ({
         const hours = date.getHours();
         const minutes = date.getMinutes();
         const seconds = date.getSeconds();
-        const timeOfDay = hours >= 12 ? "PM" : "AM";
+        const timeOfDay = hours >= 12 ? 'PM' : 'AM';
         const formattedTime = `${hours % 12 || 12}:${minutes
           .toString()
-          .padStart(2, "0")}:${seconds
+          .padStart(2, '0')}:${seconds
           .toString()
-          .padStart(2, "0")} ${timeOfDay}`;
+          .padStart(2, '0')} ${timeOfDay}`;
         return formattedTime;
       }
-      return "";
+      return '';
     };
 
-    console.log(formattedData);
-    console.log("Selected Date:", selectedDate.toISOString());
+    // console.log(formattedData);
+    // console.log('Selected Date:', selectedDate.toISOString());
     // Formatear la data para poder enviarla
-    console.log("Selected Time 1:", formatTime(selectedTime1));
-    console.log("Selected Time 2:", formatTime(selectedTime2));
+    // console.log('Selected Time 1:', formatTime(selectedTime1));
+    // console.log('Selected Time 2:', formatTime(selectedTime2));
 
     if (signatureComponentRef.current) {
       const formattedSign = signatureComponentRef.current.generateSign();
@@ -63,27 +64,28 @@ const MealTableModal = ({
     const formattedTime2 = formatTime(selectedTime2);
 
     const dataObject = {
-      actionType: "mealCount",
+      actionType: 'mealCount',
       values: {
         data: formattedData,
         date: formattedDate,
         timeIn: formattedTime1,
         timeOut: formattedTime2,
         signature: signData,
+        site: selectedSite,
       },
     };
 
     console.log(dataObject);
 
-    // Specify the GAS web app URL
-    const gasUrl = "https://script.google.com/macros/s/your-script-id/exec";
+    const gasUrl =
+      'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbzr2NF3Rm1rWqNSZYV0KLOTRPSKoEoUkbWLqXAW-StAzHVvCGzPvKTsReeoNawXtw2s/exec';
 
     // Send the axios post request with the dataObject as the request body
     axios
       .post(gasUrl, JSON.stringify(dataObject), {
         headers: {
-          "Content-Type": "application/json",
-          "x-requested-with": "XMLHttpRequest",
+          'Content-Type': 'application/json',
+          'x-requested-with': 'XMLHttpRequest',
         },
       })
       .then((response) => {
@@ -96,7 +98,7 @@ const MealTableModal = ({
         // Handle the error from the GAS web app
         console.error(error);
         // Show an error message or alert to the user
-        alert("Something went wrong. Please try again.");
+        alert('Something went wrong. Please try again.');
       });
 
     // Close the modal

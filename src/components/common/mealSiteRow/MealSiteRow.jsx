@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from "flowbite-react";
+import './MealSiteRow.css'
 
 const MealSiteRow = ({ siteData }) => {
   return (
@@ -8,12 +9,12 @@ const MealSiteRow = ({ siteData }) => {
     // }
 
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-      <Table.Cell className=" font-medium text-gray-900 dark:text-white">
+      <Table.Cell className="mealSiteRow-style">
         {siteData.name}
       </Table.Cell>
-      <Table.Cell>{siteData.ceId}</Table.Cell>
-      <Table.Cell>{siteData.siteName}</Table.Cell>
-      <Table.Cell>{siteData.siteNumber}</Table.Cell>
+      <Table.Cell className="mealSiteRow-style">{siteData.ceId}</Table.Cell>
+      <Table.Cell className="mealSiteRow-style">{siteData.siteName}</Table.Cell>
+      <Table.Cell className="mealSiteRow-style">{siteData.siteNumber}</Table.Cell>
     </Table.Row>
   );
 };

@@ -35,9 +35,10 @@ const StudentsTable = () => {
   }, []);
 
   return (
-    <div className="table-container">
-      <div className="header-container">
-      <Link to="/mealCount">
+    <div className="body-container">
+      <div className="table-container">
+        <div className="header-container">
+          <Link to="/mealCount">
             <Button
               variant="contained"
               style={{
@@ -47,66 +48,69 @@ const StudentsTable = () => {
                 borderRadius: '13px',
                 minWidth: '130px',
                 minHeight: '40px',
-                boxShadow:'none',
+                boxShadow: 'none',
               }}
             >
               Meal Count
             </Button>
           </Link>
-        <div className='drop-button-container'>
-          <SitesDropdown
-            sites={sites}
-            onSiteSelected={setSelectedSite}
-            selectedSite={selectedSite}
-          />
-          <Link to="/addStudent">
-            <Button
-              variant="contained"
-              style={{
-                textTransform: 'capitalize',
-                fontWeight: 'bold',
-                backgroundColor: '#5D24FF',
-                borderRadius: '13px',
-                minWidth: '130px',
-                minHeight: '40px',
-                boxShadow:'none',
-              }}
-            >
-              Add Student
-            </Button>
-          </Link>
+          <div className="drop-button-container">
+            <SitesDropdown
+              sites={sites}
+              onSiteSelected={setSelectedSite}
+              selectedSite={selectedSite}
+            />
+            <Link to="/addStudent">
+              <Button
+                variant="contained"
+                style={{
+                  textTransform: 'capitalize',
+                  fontWeight: 'bold',
+                  backgroundColor: '#5D24FF',
+                  borderRadius: '13px',
+                  minWidth: '130px',
+                  minHeight: '40px',
+                  boxShadow: 'none',
+                }}
+              >
+                Add Student
+              </Button>
+            </Link>
           </div>
-          </div>
-      {loading ? (
-        <div className="loading-spinner">
-          <LoadingSpinner />
         </div>
-      ) : (
-        <>
-          <Table striped>
-            <Table.Head >
-              <Table.HeadCell className='headcell'>Student Name</Table.HeadCell>
-              <Table.HeadCell className='headcell'>Age</Table.HeadCell>
-              <Table.HeadCell className='headcell'>Site</Table.HeadCell>
-              <Table.HeadCell className='headcell'>
-                <span className="sr-only">Edit</span>
-              </Table.HeadCell>
-              <Table.HeadCell className='headcell'>
-                <span className="sr-only">Delete</span>
-              </Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {students
-                .filter(
-                  (student) => !selectedSite || student.site === selectedSite
-                )
-                .map((student) => (
-                  <StudentsRow student={student} key={student.name} />
-                ))}
-            </Table.Body>
-          </Table>
-        </>
-      )}
+        {loading ? (
+          <div className="loading-spinner">
+            <LoadingSpinner />
+          </div>
+        ) : (
+          <>
+            <Table striped>
+              <Table.Head>
+                <Table.HeadCell className="headcell">
+                  Student Name
+                </Table.HeadCell>
+                <Table.HeadCell className="headcell">Age</Table.HeadCell>
+                <Table.HeadCell className="headcell">Site</Table.HeadCell>
+                <Table.HeadCell className="headcell">
+                  <span className="sr-only">Edit</span>
+                </Table.HeadCell>
+                <Table.HeadCell className="headcell">
+                  <span className="sr-only">Delete</span>
+                </Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y">
+                {students
+                  .filter(
+                    (student) => !selectedSite || student.site === selectedSite
+                  )
+                  .map((student) => (
+                    <StudentsRow student={student} key={student.name} />
+                  ))}
+              </Table.Body>
+            </Table>
+          </>
+        )}
+      </div>
     </div>
   );
 };

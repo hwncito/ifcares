@@ -13,7 +13,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 //time select
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
-const MealTable = ({ studentData }) => {
+const MealTable = ({ studentData, selectedSite }) => {
   if (!Array.isArray(studentData)) {
     studentData = [];
   }
@@ -72,9 +72,9 @@ const MealTable = ({ studentData }) => {
     <>
       <Table>
         <Table.Head>
-          <Table.HeadCell>Date</Table.HeadCell>
-          <Table.HeadCell>In</Table.HeadCell>
-          <Table.HeadCell>Out</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell">Date</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell">In</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell">Out</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           <Table.Cell>
@@ -100,20 +100,20 @@ const MealTable = ({ studentData }) => {
           </Table.Cell>
         </Table.Body>
       </Table>
-      <br />
+
       <br />
       <Table hoverable>
         <Table.Head>
-          <Table.HeadCell className="p-4">#</Table.HeadCell>
-          <Table.HeadCell>
-            Participant's Name (First & Last Name Required)
+          <Table.HeadCell className="mealTable-headcell">#</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell">
+            Participant's Name
           </Table.HeadCell>
-          <Table.HeadCell>Age</Table.HeadCell>
-          <Table.HeadCell>At</Table.HeadCell>
-          <Table.HeadCell>Brk</Table.HeadCell>
-          <Table.HeadCell>Lu</Table.HeadCell>
-          <Table.HeadCell>Snk</Table.HeadCell>
-          <Table.HeadCell>Sup</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell">Age</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">At</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">Brk</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">Lu</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">Snk</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">Sup</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {studentData.map((student) => (
@@ -164,6 +164,7 @@ const MealTable = ({ studentData }) => {
           selectedDate={selectedDate}
           selectedTime1={selectedTime1}
           selectedTime2={selectedTime2}
+          selectedSite={selectedSite}
         />
       )}
     </>

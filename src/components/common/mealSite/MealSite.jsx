@@ -4,6 +4,7 @@ import MealSiteRow from '../mealSiteRow/MealSiteRow';
 import SitesDropdown from '../sitesDropdown/SitesDropdown';
 import axios from 'axios';
 import MealTable from '../mealTable/MealTable';
+import './MealSite.css';
 
 const MealSite = () => {
   const [sites, setSites] = useState([]);
@@ -48,7 +49,6 @@ const MealSite = () => {
     axios
       .get(GAS_URL + `?type=studentData&site=${site}`)
       .then((response) => {
-        console.log(response.data);
         setStudentData(response.data);
       })
       .catch((error) => {
@@ -63,27 +63,33 @@ const MealSite = () => {
   }, [selectedSite]);
 
   return (
-    <>
+    <div className="master-table-container">
       <SitesDropdown
         sites={sites}
         onSiteSelected={setSelectedSite}
         selectedSite={selectedSite}
+        additionalStyles={{ border: 'solid 1px #3DED97' }}
+        disableAllSites={true}
       />
       <br />
       <Table>
         <Table.Head>
-          <Table.HeadCell>Name of Contracting Entity (CE)</Table.HeadCell>
-          <Table.HeadCell>CE ID</Table.HeadCell>
-          <Table.HeadCell>Name of Site</Table.HeadCell>
-          <Table.HeadCell>Site #</Table.HeadCell>
+          <Table.HeadCell className="mealSite-headcell">
+            Name of Contracting Entity (CE)
+          </Table.HeadCell>
+          <Table.HeadCell className="mealSite-headcell">CE ID</Table.HeadCell>
+          <Table.HeadCell className="mealSite-headcell">
+            Name of Site
+          </Table.HeadCell>
+          <Table.HeadCell className="mealSite-headcell">Site #</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           <MealSiteRow siteData={siteData} />
         </Table.Body>
       </Table>
       <br />
-      <MealTable studentData={studentData} />
-    </>
+      <MealTable studentData={studentData} selectedSite={selectedSite} />
+    </div>
   );
 };
 

@@ -3,12 +3,5 @@
   min-width: 600px;
   height: 100vh;
   background-color: #F0F0F0;
-}
-
-.nav {
-  background-color: #e5f3fd;
-}
-
-.text-field {
-  width: 100%;
+  padding: 1px;
 }

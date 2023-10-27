@@ -1,4 +1,7 @@
 .number {
-    font-size: 16px;
-    font-weight: 500;
+  color: #000000;
+  font-size: 18px;
+  font-style: bold;
+  font-weight: 600;
+  line-height: 130%;
 }

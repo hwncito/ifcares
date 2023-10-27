@@ -11,7 +11,7 @@ const MealTableCountRow = ({
 }) => {
   return (
     <>
-      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+      <Table.Row >
         <Table.Cell className="number">{attendanceCount}</Table.Cell>
         <Table.Cell className="number">{breakfastCount}</Table.Cell>
         <Table.Cell className="number">{lunchCount}</Table.Cell>

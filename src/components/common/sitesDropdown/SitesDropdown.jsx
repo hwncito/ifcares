@@ -3,7 +3,7 @@
 import React from 'react';
 import { Dropdown } from 'flowbite-react';
 
-const SitesDropdown = ({ sites, onSiteSelected, selectedSite }) => {
+const SitesDropdown = ({ sites, onSiteSelected, selectedSite, additionalStyles, disableAllSites = false }) => {
   return (
     <Dropdown
       dismissOnClick={true}
@@ -14,12 +14,15 @@ const SitesDropdown = ({ sites, onSiteSelected, selectedSite }) => {
         flexShrink: 0,
         color: '#000000',
         backgroundColor: '#FAFAFA',
-        marginRight:'25px'
+        marginRight:'25px',
+        ...additionalStyles,
       }}
     >
-      <Dropdown.Item onClick={() => onSiteSelected('')}>
-        All Sites
-      </Dropdown.Item>
+      {!disableAllSites && (
+        <Dropdown.Item onClick={() => onSiteSelected('')}>
+          All Sites
+        </Dropdown.Item>
+      )}
       {sites.map((site) => (
         <Dropdown.Item
           key={site.spreadsheetId}
