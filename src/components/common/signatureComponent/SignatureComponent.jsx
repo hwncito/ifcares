@@ -1,5 +1,5 @@
 import React, {
-  useState,
+  // useState,
   useRef,
   useImperativeHandle,
   forwardRef,
@@ -8,7 +8,7 @@ import SignatureCanvas from 'react-signature-canvas';
 
 const SignatureComponent = ({ onGenerateSign }, ref) => {
   //   const [sign, setSign] = useState();
-  const [url, setURL] = useState();
+  // const [url, setURL] = useState();
   const signatureRef = useRef();
 
   useImperativeHandle(ref, () => ({
@@ -16,7 +16,7 @@ const SignatureComponent = ({ onGenerateSign }, ref) => {
       const generatedURL = signatureRef.current
         .getTrimmedCanvas()
         .toDataURL('image/png');
-      setURL(generatedURL);
+      // setURL(generatedURL);
       onGenerateSign(generatedURL);
     },
     clear: () => {
