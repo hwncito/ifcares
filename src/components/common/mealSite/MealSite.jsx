@@ -13,7 +13,7 @@ const MealSite = () => {
   const [studentData, setStudentData] = useState('');
 
   const GAS_URL =
-    'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyOKJ9ZLwpQglyu4DPVuIvuGJ_xwWagLgqdKGLIae5Ay-2aAJ6sFjmcotL6P1CyHpJL/exec';
+    'https://script.google.com/macros/s/AKfycbxLHlqh_uduST6q9cquRhn-7UtZ2l18XjC2cVBghABEOU85PREmC0kut1Oug8hBi9cr/exec';
 
   useEffect(() => {
     Promise.all([axios.get(GAS_URL + '?type=sites')])
