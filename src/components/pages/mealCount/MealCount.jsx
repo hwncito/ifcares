@@ -23,7 +23,7 @@ const MealCount = () => {
               boxShadow: 'none',
             }}
           >
-            Students Table
+            Roster
           </Button>
         </Link>
       </div>

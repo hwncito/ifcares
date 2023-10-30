@@ -17,3 +17,13 @@
 .checkbox{
   width: 120px;
 }
+
+.dateTimeError-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.input-error{
+  border: solid red 1px;
+  border-radius: 5px;
+}

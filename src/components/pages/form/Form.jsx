@@ -85,7 +85,7 @@ const Form = () => {
             <TextField
               className="text-field"
               name="name"
-              label="Name"
+              label="Full Name"
               variant="outlined"
               type="text"
               onChange={handleChange}

@@ -1,17 +1,18 @@
-import MealTableModal from '../mealTableModal/MealTableModal';
-import { Table } from 'flowbite-react';
-import MealTableRow from '../mealTableRow/MealTableRow';
-import { Button } from '@mui/material';
-import React, { useState } from 'react';
-import MealTableCount from '../mealTableZCount/MealTableCount';
-import './MealTable.css';
+import MealTableModal from "../mealTableModal/MealTableModal";
+import { Table } from "flowbite-react";
+import MealTableRow from "../mealTableRow/MealTableRow";
+import { Button } from "@mui/material";
+import React, { useState } from "react";
+import MealTableCount from "../mealTableZCount/MealTableCount";
+import "./MealTable.css";
+// import dayjs from "dayjs";
 //date select
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 //time select
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 
 const MealTable = ({ studentData, selectedSite }) => {
   if (!Array.isArray(studentData)) {
@@ -33,6 +34,13 @@ const MealTable = ({ studentData, selectedSite }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [dateError, setDateError] = useState(false);
+  const [time1Error, setTime1Error] = useState(false);
+  const [time2Error, setTime2Error] = useState(false);
+
+  // const minTime = dayjs().hour(8).minute(5).second(0).millisecond(0);
+  // const maxTime = dayjs().hour(19).minute(0).second(0).millisecond(0);
+
   const handleCheckboxChange = (studentNumber, checkboxState) => {
     setSelectedCheckboxData((prevState) => ({
       ...prevState,
@@ -41,6 +49,13 @@ const MealTable = ({ studentData, selectedSite }) => {
   };
 
   const handleNextClick = () => {
+    setDateError(!selectedDate);
+    setTime1Error(!selectedTime1);
+    setTime2Error(!selectedTime2);
+
+    if (!selectedDate || !selectedTime1 || !selectedTime2) {
+      return;
+    }
     // Initialize an array to store the formatted data for each student
     const formattedData = studentData.map((student) => {
       const studentData = [student.number, student.name, student.age];
@@ -79,22 +94,68 @@ const MealTable = ({ studentData, selectedSite }) => {
         <Table.Body className="divide-y">
           <Table.Cell>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['DatePicker']}>
-                <DatePicker value={selectedDate} onChange={setSelectedDate} />
+              <DemoContainer components={["DatePicker"]}>
+                <div className="dateTimeError-container">
+                  <div className={dateError ? "input-error" : ""}>
+                    <DatePicker
+                      value={selectedDate}
+                      onChange={(date) => {
+                        setSelectedDate(date);
+                        setDateError(false); // reset error when a date is selected
+                      }}
+                      required
+                    />
+                  </div>
+                  {dateError && (
+                    <span style={{ color: "red" }}>Date is required</span>
+                  )}
+                </div>
               </DemoContainer>
             </LocalizationProvider>
           </Table.Cell>
           <Table.Cell>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['TimePicker']}>
-                <TimePicker value={selectedTime1} onChange={setSelectedTime1} />
+              <DemoContainer components={["TimePicker"]}>
+                <div className="dateTimeError-container">
+                  <div className={time1Error ? "input-error" : ""}>
+                    <TimePicker
+                      value={selectedTime1}
+                      onChange={(time) => {
+                        setSelectedTime1(time);
+                        setTime1Error(false); // reset error when a time is selected
+                      }}
+                      required
+                      // minTime={minTime}
+                      // maxTime={maxTime}
+                    />
+                  </div>
+                  {time1Error && (
+                    <span style={{ color: "red" }}>Time In is required</span>
+                  )}
+                </div>
               </DemoContainer>
             </LocalizationProvider>
           </Table.Cell>
           <Table.Cell>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['TimePicker']}>
-                <TimePicker value={selectedTime2} onChange={setSelectedTime2} />
+              <DemoContainer components={["TimePicker"]}>
+                <div className="dateTimeError-container">
+                  <div className={time2Error ? "input-error" : ""}>
+                    <TimePicker
+                      value={selectedTime2}
+                      onChange={(time) => {
+                        setSelectedTime2(time);
+                        setTime2Error(false); // reset error when a time is selected
+                      }}
+                      required
+                      // minTime={minTime}
+                      // maxTime={maxTime}
+                    />
+                  </div>
+                  {time2Error && (
+                    <span style={{ color: "red" }}>Time Out is required</span>
+                  )}
+                </div>
               </DemoContainer>
             </LocalizationProvider>
           </Table.Cell>
@@ -109,11 +170,21 @@ const MealTable = ({ studentData, selectedSite }) => {
             Participant's Name
           </Table.HeadCell>
           <Table.HeadCell className="mealTable-headcell">Age</Table.HeadCell>
-          <Table.HeadCell className="mealTable-headcell checkbox">At</Table.HeadCell>
-          <Table.HeadCell className="mealTable-headcell checkbox">Brk</Table.HeadCell>
-          <Table.HeadCell className="mealTable-headcell checkbox">Lu</Table.HeadCell>
-          <Table.HeadCell className="mealTable-headcell checkbox">Snk</Table.HeadCell>
-          <Table.HeadCell className="mealTable-headcell checkbox">Sup</Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">
+            At
+          </Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">
+            Brk
+          </Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">
+            Lu
+          </Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">
+            Snk
+          </Table.HeadCell>
+          <Table.HeadCell className="mealTable-headcell checkbox">
+            Sup
+          </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {studentData.map((student) => (
@@ -135,13 +206,13 @@ const MealTable = ({ studentData, selectedSite }) => {
         <Button
           variant="contained"
           style={{
-            textTransform: 'capitalize',
-            fontWeight: 'bold',
-            backgroundColor: '#3DED97',
-            borderRadius: '13px',
-            minWidth: '130px',
-            minHeight: '40px',
-            boxShadow: 'none',
+            textTransform: "capitalize",
+            fontWeight: "bold",
+            backgroundColor: "#3DED97",
+            borderRadius: "13px",
+            minWidth: "130px",
+            minHeight: "40px",
+            boxShadow: "none",
           }}
           onClick={handleNextClick}
         >
