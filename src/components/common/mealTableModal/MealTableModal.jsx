@@ -79,12 +79,13 @@ const MealTableModal = ({
 
     console.log(dataObject);
 
+    const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/'
     const gasUrl =
-      'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbzr2NF3Rm1rWqNSZYV0KLOTRPSKoEoUkbWLqXAW-StAzHVvCGzPvKTsReeoNawXtw2s/exec';
+      'https://script.google.com/macros/s/AKfycbzr2NF3Rm1rWqNSZYV0KLOTRPSKoEoUkbWLqXAW-StAzHVvCGzPvKTsReeoNawXtw2s/exec';
 
     // Send the axios post request with the dataObject as the request body
     axios
-      .post(gasUrl, JSON.stringify(dataObject), {
+      .post(PROXY_URL + gasUrl, JSON.stringify(dataObject), {
         headers: {
           'Content-Type': 'application/json',
           'x-requested-with': 'XMLHttpRequest',

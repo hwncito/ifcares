@@ -95,9 +95,12 @@ export default function StudentsRow({ student }) {
 
                 console.log(formattedData);
 
+                const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/'
+                const GAS_URL = 'https://script.google.com/macros/s/AKfycbxMWDqUjbFKvv46u13RV1GwzthjSkucPTTsZLH0l_CxJY3vtmZu0gWMsEjLxFL_KK-r/exec'
+
                 axios
                   .post(
-                    "https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbxMWDqUjbFKvv46u13RV1GwzthjSkucPTTsZLH0l_CxJY3vtmZu0gWMsEjLxFL_KK-r/exec",
+                    PROXY_URL + GAS_URL,
                     JSON.stringify(formattedData),
                     {
                       headers: {
