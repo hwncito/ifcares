@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Button, Modal } from 'flowbite-react';
 import axios from 'axios';
 import SignatureComponent from '../signatureComponent/SignatureComponent';
+import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
+import ConfirmationToast from '../confirmationToast/ConfirmationToast';
+import './MealTableModal.css';
 
 const MealTableModal = ({
   isOpen,
@@ -12,16 +15,12 @@ const MealTableModal = ({
   selectedTime2,
   selectedSite,
 }) => {
-  const [openModal, setOpenModal] = useState(false); // State for modal visibility
+  // const [openModal, setOpenModal] = useState(false); // State for modal visibility
   const signatureComponentRef = useRef(null); // Initialize ref with null
 
   // const [signatureURL, setSignatureURL] = useState('');
 
   let signData = '';
-
-  const handleToggleModal = () => {
-    setOpenModal(!openModal);
-  };
 
   const generateSign = (url) => {
     // Do something with the generated signature URL (url)
@@ -30,7 +29,11 @@ const MealTableModal = ({
     // console.log('Generated Signature URL:', url);
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [toastType, setToastType] = useState(null);
+
   const handleFormSubmit = () => {
+    setIsLoading(true);
     // function to format the date
     const formatTime = (selectedTime) => {
       if (selectedTime) {
@@ -57,9 +60,8 @@ const MealTableModal = ({
 
     if (signatureComponentRef.current) {
       const formattedSign = signatureComponentRef.current.generateSign();
-      console.log(formattedSign)
+      console.log(formattedSign);
     }
-    
 
     const formattedDate = selectedDate.toISOString();
     const formattedTime1 = formatTime(selectedTime1);
@@ -79,7 +81,7 @@ const MealTableModal = ({
 
     console.log(dataObject);
 
-    const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/'
+    const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/';
     const gasUrl =
       'https://script.google.com/macros/s/AKfycbzr2NF3Rm1rWqNSZYV0KLOTRPSKoEoUkbWLqXAW-StAzHVvCGzPvKTsReeoNawXtw2s/exec';
 
@@ -94,48 +96,64 @@ const MealTableModal = ({
       .then((response) => {
         // Handle the response from the GAS web app
         console.log(response.data);
-        // Close the modal
-        handleToggleModal();
+        setToastType('success');
+        setTimeout(() => {
+          window.location.reload(); // Refresh the page
+        }, 4000);
       })
       .catch((error) => {
         // Handle the error from the GAS web app
         console.error(error);
-        // Show an error message or alert to the user
-        alert('Something went wrong. Please try again.');
+        setToastType('error');
+        setTimeout(() => {
+          window.location.reload(); // Refresh the page
+        }, 4000);
+      })
+      .finally(() => {
+        // Set the loading state back to false once you get a response or an error
+        setIsLoading(false);
       });
-
-    // Close the modal
-    handleToggleModal();
   };
 
   return (
     <>
       <Modal show={isOpen} size="xl" popup onClose={closeModal}>
         <Modal.Header />
-        <Modal.Body>
-          <div className="text-center">
-            <h3 className="mb-5 text-lg font-normal">
-              <b>
-                I certify that the information on this form is true and correct
-                to the best of my knowledge and that I will claim reimbursement
-                only for <span className="underline">eligible</span> meals
-                served to <span className="underline">eligible</span> Program
-                participants. I understand that misrepresentation may result in
-                prosecution under applicable state or federal laws.
-              </b>
-            </h3>
-            <SignatureComponent
-              onGenerateSign={generateSign}
-              ref={signatureComponentRef}
-            />
-            <br />
-            <br />
-            <div className="flex justify-center gap-4">
-              <Button color="green" onClick={handleFormSubmit}>
-                SUBMIT
-              </Button>
+        <Modal.Body className="modalBody-container">
+          {isLoading ? (
+            <div className="loadingSpinner-container">
+              <LoadingSpinner />
             </div>
-          </div>
+          ) : toastType ? (
+            <div className="container-confirmationToast">
+              <ConfirmationToast type={toastType} />
+            </div>
+          ) : (
+            <div className="text-center">
+              <h3 className="mb-5 text-lg font-normal">
+                <b>
+                  I certify that the information on this form is true and
+                  correct to the best of my knowledge and that I will claim
+                  reimbursement only for{' '}
+                  <span className="underline">eligible</span> meals served to{' '}
+                  <span className="underline">eligible</span> Program
+                  participants. I understand that misrepresentation may result
+                  in prosecution under applicable state or federal laws.
+                </b>
+              </h3>
+              <SignatureComponent
+                onGenerateSign={generateSign}
+                ref={signatureComponentRef}
+              />
+              <br />
+              <br />
+              <div className="flex justify-center gap-4">
+                <Button color="green" onClick={handleFormSubmit}>
+                  SUBMIT
+                </Button>
+              </div>
+            </div>
+          )}
         </Modal.Body>
       </Modal>
     </>

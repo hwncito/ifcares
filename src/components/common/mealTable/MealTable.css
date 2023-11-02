@@ -27,3 +27,12 @@
   border: solid red 1px;
   border-radius: 5px;
 }
+
+.datepicker-input{
+  width: 100%;
+}
+
+.timepicker-input{
+  width: 100%;
+}
+
