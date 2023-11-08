@@ -71,11 +71,13 @@ const StudentsTable = () => {
             </Button>
           </Link>
           <div className="drop-button-container">
-            <SitesDropdown
-              sites={sites}
-              onSiteSelected={setSelectedSite}
-              selectedSite={selectedSite}
-            />
+            {auth.role === ROLES.Admin && 
+              <SitesDropdown
+                sites={sites}
+                onSiteSelected={setSelectedSite}
+                selectedSite={selectedSite}
+              />
+            }
             <Link to="/addStudent">
               <Button
                 variant="contained"
