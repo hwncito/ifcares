@@ -10,7 +10,7 @@ const MealCount = () => {
     <div className="mealCount-body">
       <div className="navigation-container">
         <h2 className="title">Daily Meal Count and Attendance Record</h2>
-        <Link to="/">
+        <Link to="/home">
           <Button
             variant="contained"
             style={{

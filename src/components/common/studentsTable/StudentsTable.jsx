@@ -1,19 +1,27 @@
-import React from 'react';
-import './StudentsTable.css';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+
 import { Table } from 'flowbite-react';
+import { Button } from '@mui/material';
+
+import useAuth from '../../../hooks/useAuth';
+
 import StudentsRow from '../studentsRow/StudentsRow';
 import SitesDropdown from '../sitesDropdown/SitesDropdown';
 import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
-import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+
+import { ROLES } from '../../../constants';
+
+import './StudentsTable.css';
 
 const StudentsTable = () => {
   const [students, setStudents] = useState([]);
   const [sites, setSites] = useState([]);
   const [selectedSite, setSelectedSite] = useState('');
   const [loading, setLoading] = useState(true);
+
+  const { auth } = useAuth()
 
   const GAS_URL =
     'https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec';
@@ -24,9 +32,17 @@ const StudentsTable = () => {
       axios.get(GAS_URL + '?type=sites'),
     ])
       .then(([studentsResponse, sitesResponse]) => {
-        setStudents(studentsResponse.data);
-        setSites(sitesResponse.data);
-        setLoading(false);
+        if (auth.role !== ROLES.Admin) {
+          const students = studentsResponse.data.filter(item => item.site === auth.assignedSite);
+          const sites = sitesResponse.data.filter(item => item.name === auth.assignedSite)
+          setStudents(students)
+          setSites(sites);
+          setLoading(false);
+        } else {
+          setStudents(studentsResponse.data);
+          setSites(sitesResponse.data);
+          setLoading(false);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);

@@ -5,6 +5,8 @@ import SitesDropdown from '../sitesDropdown/SitesDropdown';
 import axios from 'axios';
 import MealTable from '../mealTable/MealTable';
 import './MealSite.css';
+import useAuth from '../../../hooks/useAuth';
+import { ROLES } from '../../../constants';
 
 const MealSite = () => {
   const [sites, setSites] = useState([]);
@@ -12,13 +14,21 @@ const MealSite = () => {
   const [siteData, setSiteData] = useState('');
   const [studentData, setStudentData] = useState('');
 
+  const { auth } = useAuth()
+
   const GAS_URL =
     'https://script.google.com/macros/s/AKfycbxLHlqh_uduST6q9cquRhn-7UtZ2l18XjC2cVBghABEOU85PREmC0kut1Oug8hBi9cr/exec';
 
   useEffect(() => {
     Promise.all([axios.get(GAS_URL + '?type=sites')])
       .then(([sitesResponse]) => {
-        setSites(sitesResponse.data);
+        if (auth.role !== ROLES.Admin) {
+          console.log("Sites: ", sitesResponse.data)
+          const sites = sitesResponse.data.filter(item => item.name === auth.assignedSite)
+          setSites(sites)
+        } else {
+          setSites(sitesResponse.data);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);

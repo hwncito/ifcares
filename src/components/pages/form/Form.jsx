@@ -142,7 +142,7 @@ const Form = () => {
           </div>
 
           <div className="button-container">
-            <Link to="/">
+            <Link to="/home">
               <Button
                 variant="contained"
                 size="small"

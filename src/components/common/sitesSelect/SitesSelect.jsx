@@ -7,6 +7,8 @@ import {
   FormHelperText,
 } from "@mui/material";
 import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
+import { ROLES } from "../../../constants";
 
 const SitesSelect = ({
   onSiteSelected,
@@ -18,6 +20,8 @@ const SitesSelect = ({
   const [sites, setSites] = useState([]);
   const [selectedSite, setSelectedSite] = useState("");
 
+  const { auth } = useAuth()
+
   useEffect(() => {
     setSelectedSite(selectedSiteValue);
   }, [selectedSiteValue]);
@@ -28,7 +32,12 @@ const SitesSelect = ({
         "https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec?type=sites"
       )
       .then((response) => {
-        setSites(response.data);
+        if (auth.role !== ROLES.Admin) {
+          const sites = response.data.filter(item => item.name === auth.assignedSite)
+          setSites(sites);
+        } else {
+          setSites(response.data)
+        }
       })
       .catch((error) => {
         console.error("Error fetching sites:", error);
