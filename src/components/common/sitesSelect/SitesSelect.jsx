@@ -29,7 +29,7 @@ const SitesSelect = ({
   useEffect(() => {
     axios
       .get(
-        "https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec?type=sites"
+        "https://script.google.com/macros/s/AKfycbydLMqJketiihQlyAnRZB9IeXXsyqHpJga6K_meVD_YuqKVvr5EVLPgO7xKsEXNFK51/exec?type=sites"
       )
       .then((response) => {
         if (auth.role !== ROLES.Admin) {

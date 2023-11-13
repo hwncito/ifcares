@@ -16,7 +16,7 @@ const MealSite = () => {
   const { selectedSite, setSelectedSite, siteData, setSiteData, studentData, setStudentData } = useContext(MealSiteContext);
 
   const GAS_URL =
-    'https://script.google.com/macros/s/AKfycbxLHlqh_uduST6q9cquRhn-7UtZ2l18XjC2cVBghABEOU85PREmC0kut1Oug8hBi9cr/exec';
+    'https://script.google.com/macros/s/AKfycbydLMqJketiihQlyAnRZB9IeXXsyqHpJga6K_meVD_YuqKVvr5EVLPgO7xKsEXNFK51/exec';
 
   useEffect(() => {
     console.log(selectedSite);

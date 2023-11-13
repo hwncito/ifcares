@@ -24,7 +24,7 @@ const Form = () => {
     console.log(data);
     const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/'
     const GAS_URL =
-      PROXY_URL + 'https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec';
+      PROXY_URL + 'https://script.google.com/macros/s/AKfycbydLMqJketiihQlyAnRZB9IeXXsyqHpJga6K_meVD_YuqKVvr5EVLPgO7xKsEXNFK51/exec';
 
     const formattedData = {
       actionType: 'add',

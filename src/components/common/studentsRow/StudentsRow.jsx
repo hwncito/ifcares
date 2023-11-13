@@ -96,7 +96,7 @@ export default function StudentsRow({ student }) {
                 console.log(formattedData);
 
                 const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/'
-                const GAS_URL = 'https://script.google.com/macros/s/AKfycbxMWDqUjbFKvv46u13RV1GwzthjSkucPTTsZLH0l_CxJY3vtmZu0gWMsEjLxFL_KK-r/exec'
+                const GAS_URL = 'https://script.google.com/macros/s/AKfycbydLMqJketiihQlyAnRZB9IeXXsyqHpJga6K_meVD_YuqKVvr5EVLPgO7xKsEXNFK51/exec'
 
                 axios
                   .post(
