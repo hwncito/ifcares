@@ -1,36 +1,38 @@
-import MealTableModal from '../mealTableModal/MealTableModal';
-import { Table } from 'flowbite-react';
-import MealTableRow from '../mealTableRow/MealTableRow';
-import { Button } from '@mui/material';
-import React, { useState, useContext } from 'react';
-import MealTableCount from '../mealTableZCount/MealTableCount';
-import './MealTable.css';
+import MealTableModal from "../mealTableModal/MealTableModal";
+import { Table } from "flowbite-react";
+import MealTableRow from "../mealTableRow/MealTableRow";
+import { Button } from "@mui/material";
+import React, { useState, useContext } from "react";
+import MealTableCount from "../mealTableZCount/MealTableCount";
+import "./MealTable.css";
 // import dayjs from "dayjs";
 //date select
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 //time select
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { MealSiteContext } from '../mealSiteProvider/MealSiteProvider'; 
-
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { MealSiteContext } from "../mealSiteProvider/MealSiteProvider";
 
 const MealTable = () => {
-  const { studentData, selectedSite, selectedDate, setSelectedDate, selectedTime1, setSelectedTime1, selectedTime2, setSelectedTime2 } = useContext(MealSiteContext);
+  const {
+    studentData,
+    selectedSite,
+    selectedDate,
+    setSelectedDate,
+    selectedTime1,
+    setSelectedTime1,
+    selectedTime2,
+    setSelectedTime2,
+    selectedCheckboxData,
+    globalCounts
+  } = useContext(MealSiteContext);
   const validStudentData = Array.isArray(studentData) ? studentData : [];
 
 
-  const [attendanceCount, setAttendanceCount] = useState(0);
-  const [breakfastCount, setBreakfastCount] = useState(0);
-  const [lunchCount, setLunchCount] = useState(0);
-  const [snackCount, setSnackCount] = useState(0);
-  const [supperCount, setSupperCount] = useState(0);
-
-  const [selectedCheckboxData, setSelectedCheckboxData] = useState({});
 
   const [formattedData, setFormattedData] = useState([]);
-
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -40,13 +42,6 @@ const MealTable = () => {
 
   // const minTime = dayjs().hour(8).minute(5).second(0).millisecond(0);
   // const maxTime = dayjs().hour(19).minute(0).second(0).millisecond(0);
-
-  const handleCheckboxChange = (studentNumber, checkboxState) => {
-    setSelectedCheckboxData((prevState) => ({
-      ...prevState,
-      [studentNumber]: checkboxState,
-    }));
-  };
 
   const handleNextClick = () => {
     setDateError(!selectedDate);
@@ -92,13 +87,13 @@ const MealTable = () => {
           <Table.HeadCell className="mealTable-headcell">Out</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          <Table.Cell >
-            <LocalizationProvider dateAdapter={AdapterDayjs} >
-              <DemoContainer components={['DatePicker']} >
-                <div className="dateTimeError-container" >
-                  <div className={dateError ? 'input-error' : ''}>
+          <Table.Cell>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <div className="dateTimeError-container">
+                  <div className={dateError ? "input-error" : ""}>
                     <DatePicker
-                      className='datepicker-input'
+                      className="datepicker-input"
                       value={selectedDate}
                       onChange={(date) => {
                         setSelectedDate(date);
@@ -108,7 +103,7 @@ const MealTable = () => {
                     />
                   </div>
                   {dateError && (
-                    <span style={{ color: 'red' }}>Date is required</span>
+                    <span style={{ color: "red" }}>Date is required</span>
                   )}
                 </div>
               </DemoContainer>
@@ -116,11 +111,11 @@ const MealTable = () => {
           </Table.Cell>
           <Table.Cell>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['TimePicker']}>
+              <DemoContainer components={["TimePicker"]}>
                 <div className="dateTimeError-container">
-                  <div className={time1Error ? 'input-error' : ''}>
+                  <div className={time1Error ? "input-error" : ""}>
                     <TimePicker
-                      className='timepicker-input'
+                      className="timepicker-input"
                       value={selectedTime1}
                       onChange={(time) => {
                         setSelectedTime1(time);
@@ -132,7 +127,7 @@ const MealTable = () => {
                     />
                   </div>
                   {time1Error && (
-                    <span style={{ color: 'red' }}>Time In is required</span>
+                    <span style={{ color: "red" }}>Time In is required</span>
                   )}
                 </div>
               </DemoContainer>
@@ -140,11 +135,11 @@ const MealTable = () => {
           </Table.Cell>
           <Table.Cell>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['TimePicker']}>
+              <DemoContainer components={["TimePicker"]}>
                 <div className="dateTimeError-container">
-                  <div className={time2Error ? 'input-error' : ''}>
+                  <div className={time2Error ? "input-error" : ""}>
                     <TimePicker
-                      className='timepicker-input'
+                      className="timepicker-input"
                       value={selectedTime2}
                       onChange={(time) => {
                         setSelectedTime2(time);
@@ -156,7 +151,7 @@ const MealTable = () => {
                     />
                   </div>
                   {time2Error && (
-                    <span style={{ color: 'red' }}>Time Out is required</span>
+                    <span style={{ color: "red" }}>Time Out is required</span>
                   )}
                 </div>
               </DemoContainer>
@@ -194,12 +189,6 @@ const MealTable = () => {
             <MealTableRow
               student={student}
               key={student.name}
-              setAttendanceCount={setAttendanceCount}
-              setBreakfastCount={setBreakfastCount}
-              setLunchCount={setLunchCount}
-              setSnackCount={setSnackCount}
-              setSupperCount={setSupperCount}
-              onCheckboxChange={handleCheckboxChange}
             />
           ))}
         </Table.Body>
@@ -209,13 +198,13 @@ const MealTable = () => {
         <Button
           variant="contained"
           style={{
-            textTransform: 'capitalize',
-            fontWeight: 'bold',
-            backgroundColor: '#3DED97',
-            borderRadius: '13px',
-            minWidth: '130px',
-            minHeight: '40px',
-            boxShadow: 'none',
+            textTransform: "capitalize",
+            fontWeight: "bold",
+            backgroundColor: "#3DED97",
+            borderRadius: "13px",
+            minWidth: "130px",
+            minHeight: "40px",
+            boxShadow: "none",
           }}
           onClick={handleNextClick}
         >
@@ -224,11 +213,11 @@ const MealTable = () => {
       </div>
       <br />
       <MealTableCount
-        attendanceCount={attendanceCount}
-        breakfastCount={breakfastCount}
-        lunchCount={lunchCount}
-        snackCount={snackCount}
-        supperCount={supperCount}
+        attendanceCount={globalCounts.attendance}
+        breakfastCount={globalCounts.breakfast}
+        lunchCount={globalCounts.lunch}
+        snackCount={globalCounts.snack}
+        supperCount={globalCounts.supper}
       />
       {isModalOpen && (
         <MealTableModal
