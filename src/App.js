@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { AuthProvider } from './context/AuthProvider';
 
@@ -14,19 +14,19 @@ import { ROLES } from './constants';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename="/ifcares">
-        <AuthProvider>
-          <Routes>
-            <Route exact path="/" element={<Login />} />
-            <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.User]} />}>
-              <Route exact path='/home' element={<Home />} />
-              <Route path="/addStudent" element={<Form />} />
-              <Route path="/mealCount" element={<MealCount />} />
-            </Route>
-          </Routes>
-        </AuthProvider>
-      </BrowserRouter>
-    </div>
+    <Router basename="/">
+      <AuthProvider>
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.User]} />}>
+            <Route exact path='/home' element={<Home />} />
+            <Route path="/addStudent" element={<Form />} />
+            <Route path="/mealCount" element={<MealCount />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </Router>
+  </div>
   );
 }
 
