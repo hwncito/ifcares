@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Table } from 'flowbite-react';
 import MealSiteRow from '../mealSiteRow/MealSiteRow';
 import SitesDropdown from '../sitesDropdown/SitesDropdown';
@@ -7,19 +7,24 @@ import MealTable from '../mealTable/MealTable';
 import './MealSite.css';
 import useAuth from '../../../hooks/useAuth';
 import { ROLES } from '../../../constants';
+import { MealSiteContext } from '../mealSiteProvider/MealSiteProvider'; 
+
 
 const MealSite = () => {
   const [sites, setSites] = useState([]);
-  const [selectedSite, setSelectedSite] = useState('');
-  const [siteData, setSiteData] = useState('');
-  const [studentData, setStudentData] = useState('');
-
-  const { auth } = useAuth()
+  const { auth } = useAuth();
+  const { selectedSite, setSelectedSite, siteData, setSiteData, studentData, setStudentData } = useContext(MealSiteContext);
 
   const GAS_URL =
     'https://script.google.com/macros/s/AKfycbxLHlqh_uduST6q9cquRhn-7UtZ2l18XjC2cVBghABEOU85PREmC0kut1Oug8hBi9cr/exec';
 
   useEffect(() => {
+    console.log(selectedSite);
+    if (selectedSite) {
+      fetchDataForSelectedSite(selectedSite);
+      fetchStudentForSelectedSite(selectedSite);
+    }else{
+
     Promise.all([axios.get(GAS_URL + '?type=sites')])
       .then(([sitesResponse]) => {
         if (auth.role !== ROLES.Admin) {
@@ -33,7 +38,8 @@ const MealSite = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
-  }, []);
+    }
+  }, [selectedSite]);
 
   const fetchDataForSelectedSite = (site) => {
     // Make an API request with the selected site as a parameter

@@ -10,12 +10,14 @@ import MealCount from './components/pages/mealCount/MealCount';
 import Login from './components/pages/login/Login';
 
 import { ROLES } from './constants';
+import { MealSiteProvider } from './components/common/mealSiteProvider/MealSiteProvider';
 
 function App() {
   return (
     <div className="App">
     <Router basename="/">
       <AuthProvider>
+      <MealSiteProvider>
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.User]} />}>
@@ -24,6 +26,7 @@ function App() {
             <Route path="/mealCount" element={<MealCount />} />
           </Route>
         </Routes>
+        </MealSiteProvider>
       </AuthProvider>
     </Router>
   </div>

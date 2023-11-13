@@ -2,7 +2,7 @@ import MealTableModal from '../mealTableModal/MealTableModal';
 import { Table } from 'flowbite-react';
 import MealTableRow from '../mealTableRow/MealTableRow';
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import MealTableCount from '../mealTableZCount/MealTableCount';
 import './MealTable.css';
 // import dayjs from "dayjs";
@@ -13,11 +13,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 //time select
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { MealSiteContext } from '../mealSiteProvider/MealSiteProvider'; 
 
-const MealTable = ({ studentData, selectedSite }) => {
-  if (!Array.isArray(studentData)) {
-    studentData = [];
-  }
+
+const MealTable = () => {
+  const { studentData, selectedSite, selectedDate, setSelectedDate, selectedTime1, setSelectedTime1, selectedTime2, setSelectedTime2 } = useContext(MealSiteContext);
+  const validStudentData = Array.isArray(studentData) ? studentData : [];
+
 
   const [attendanceCount, setAttendanceCount] = useState(0);
   const [breakfastCount, setBreakfastCount] = useState(0);
@@ -28,9 +30,7 @@ const MealTable = ({ studentData, selectedSite }) => {
   const [selectedCheckboxData, setSelectedCheckboxData] = useState({});
 
   const [formattedData, setFormattedData] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime1, setSelectedTime1] = useState(null);
-  const [selectedTime2, setSelectedTime2] = useState(null);
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -57,13 +57,13 @@ const MealTable = ({ studentData, selectedSite }) => {
       return;
     }
     // Initialize an array to store the formatted data for each student
-    const formattedData = studentData.map((student) => {
-      const studentData = [student.number, student.name, student.age];
+    const formattedData = validStudentData.map((student) => {
+      const validStudentData = [student.number, student.name, student.age];
 
       // Check if selectedCheckboxData exists for this student
       if (selectedCheckboxData[student.number]) {
         // Add checkbox values to the array
-        studentData.push(
+        validStudentData.push(
           selectedCheckboxData[student.number].attendance,
           selectedCheckboxData[student.number].breakfast,
           selectedCheckboxData[student.number].lunch,
@@ -72,10 +72,10 @@ const MealTable = ({ studentData, selectedSite }) => {
         );
       } else {
         // If selectedCheckboxData doesn't exist, add false values for checkboxes
-        studentData.push(false, false, false, false, false);
+        validStudentData.push(false, false, false, false, false);
       }
 
-      return studentData;
+      return validStudentData;
     });
 
     setFormattedData(formattedData);
@@ -190,7 +190,7 @@ const MealTable = ({ studentData, selectedSite }) => {
           </Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          {studentData.map((student) => (
+          {validStudentData.map((student) => (
             <MealTableRow
               student={student}
               key={student.name}
