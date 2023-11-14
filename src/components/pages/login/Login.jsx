@@ -44,6 +44,7 @@ export default function Login() {
         if(result === 'success') {
           setLoading(false)
           setAuth(data)
+          localStorage.setItem('user', JSON.stringify(data))
           navigate(from, { replace: true });
         } else {
           setError(message)
