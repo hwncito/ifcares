@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Dropdown } from 'flowbite-react';
+import "../studentsTable/StudentsTable.css";
 
 const SitesDropdown = ({ sites, onSiteSelected, selectedSite, additionalStyles, disableAllSites = false }) => {
   return (
@@ -17,14 +18,18 @@ const SitesDropdown = ({ sites, onSiteSelected, selectedSite, additionalStyles, 
         marginRight:'25px',
         ...additionalStyles,
       }}
+      className="meal-count-btn"
     >
       {!disableAllSites && (
-        <Dropdown.Item onClick={() => onSiteSelected('')}>
+        <Dropdown.Item 
+        className='meal-count-btn'
+        onClick={() => onSiteSelected('')}>
           All Sites
         </Dropdown.Item>
       )}
       {sites.map((site) => (
         <Dropdown.Item
+        className='meal-count-btn'
           key={site.spreadsheetId}
           onClick={() => onSiteSelected(site.name)}
         >
