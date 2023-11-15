@@ -15,7 +15,7 @@ export default function Header() {
         <p>{`${name} ${lastname}`}</p>
         <p>{email}</p>
       </div>
-      <div className="ml-8 mr-2 hover:text-slate-400 hover:cursor-pointer" onClick={() => handleLogout}>
+      <div className="ml-8 mr-2 hover:text-slate-400 hover:cursor-pointer" onClick={handleLogout}>
         Logout
       </div>
     </header>  
