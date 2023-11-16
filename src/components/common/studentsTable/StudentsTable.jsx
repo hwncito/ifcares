@@ -53,89 +53,7 @@ const StudentsTable = () => {
         setLoading(false);
       });
   }, []);
-
-  // return (
-  //   <div className="body-container">
-  //     <div className="table-container">
-  //       <div className="header-container">
-  //         <Link to="/mealCount">
-  //           <Button
-  //             variant="contained"
-  //             style={{
-  //               textTransform: 'capitalize',
-  //               fontWeight: 'bold',
-  //               backgroundColor: '#3DED97',
-  //               borderRadius: '13px',
-  //               minWidth: '130px',
-  //               minHeight: '40px',
-  //               boxShadow: 'none',
-  //             }}
-  //           >
-  //             Meal Count
-  //           </Button>
-  //         </Link>
-  //         <div className="drop-button-container">
-  //           {auth.role === ROLES.Admin &&
-  //             <SitesDropdown
-  //               sites={sites}
-  //               onSiteSelected={setSelectedSite}
-  //               selectedSite={selectedSite}
-  //             />
-  //           }
-  //           <Link to="/addStudent">
-  //             <Button
-  //               variant="contained"
-  //               style={{
-  //                 textTransform: 'capitalize',
-  //                 fontWeight: 'bold',
-  //                 backgroundColor: '#5D24FF',
-  //                 borderRadius: '13px',
-  //                 minWidth: '130px',
-  //                 minHeight: '40px',
-  //                 boxShadow: 'none',
-  //               }}
-  //             >
-  //               Add Student
-  //             </Button>
-  //           </Link>
-  //         </div>
-  //       </div>
-  //       {loading ? (
-  //         <div className="loading-spinner">
-  //           <LoadingSpinner />
-  //         </div>
-  //       ) : (
-  //         <>
-  //           <Table striped>
-  //             <Table.Head>
-  //               <Table.HeadCell className="headcell">
-  //                 Student Name
-  //               </Table.HeadCell>
-  //               <Table.HeadCell className="headcell">Age</Table.HeadCell>
-  //               <Table.HeadCell className="headcell">Site</Table.HeadCell>
-  //               <Table.HeadCell className="headcell">
-  //                 <span className="sr-only">Edit</span>
-  //               </Table.HeadCell>
-  //               <Table.HeadCell className="headcell">
-  //                 <span className="sr-only">Delete</span>
-  //               </Table.HeadCell>
-  //             </Table.Head>
-  //             <Table.Body className="divide-y">
-  //               {students
-  //                 .filter(
-  //                   (student) => !selectedSite || student.site === selectedSite
-  //                 )
-  //                 .map((student) => (
-  //                   <StudentsRow student={student} key={student.name} />
-  //                 ))}
-  //             </Table.Body>
-  //           </Table>
-  //         </>
-  //       )}
-  //     </div>
-  //   </div>
-  // );
-
+  
   return (
     <div className="body-container">
       <div className="table-container">
@@ -145,7 +63,7 @@ const StudentsTable = () => {
             <Link to="/mealCount">
               <Button
                 variant="contained"
-                className="text-transform[capitalize] font-bold bg-[#3DED97] rounded-[13px] min-w-[130px] min-h-[40px] shadow-none"
+                className="text-transform[capitalize] font-bold bg-[#3DED97] rounded-[13px] min-w-[130px] min-h-[40px] shadow-none meal-count-btn"
                 style={{
                   textTransform: "capitalize",
                   fontWeight: "bold",
@@ -161,18 +79,18 @@ const StudentsTable = () => {
             </Link>
           </div>
           {/* This div will center the dropdown and button below the Meal Count button on mobile */}
-          <div className="flex flex-row justify-center m-auto items-center w-full mt-4 md:justify-end md:mt-0 md:flex-row md:items-center">
+          <div className="flex flex-row justify-center m-auto items-center w-full mt-4 md:justify-end md:mt-0 md:flex-row md:items-center meal-count-btn">
             {auth.role === ROLES.Admin && (
               <SitesDropdown
                 sites={sites}
                 onSiteSelected={setSelectedSite}
                 selectedSite={selectedSite}
-                className="mb-4 md:mb-0 md:mr-4"
+                className="mb-4 md:mb-0 md:mr-4 dropdown-label"
               />
             )}
             <Link to="/addStudent">
               <Button
-                className="text-transform[capitalize] font-bold bg-[#5D24FF] rounded-[13px] min-w-[130px] min-h-[40px] shadow-none"
+                className="text-transform[capitalize] font-bold bg-[#5D24FF] rounded-[13px] min-w-[130px] min-h-[40px] shadow-none meal-count-btn"
                 variant="contained"
                 style={{
                   textTransform: "capitalize",
@@ -223,7 +141,7 @@ const StudentsTable = () => {
                 </Table.Body>
               </Table>
             </div>
-            <div className="block sm:hidden">
+            <div className="block sm:hidden ">
               {/* Mobile-friendly list */}
               {students
                 .filter(
@@ -231,20 +149,21 @@ const StudentsTable = () => {
                 )
                 .map((student) => (
                   <div
-                    className="flex flex-col p-4 border-b bg-white rounded-lg mt-2"
+                    className="flex flex-col p-4 border-b bg-white rounded-lg mt-2 text-lg"
                     key={student.name}
                   >
-                    <span className="font-bold bg-white rounded-lg">
+                    <span className="font-bold bg-white rounded-lg text-xl">
                       {student.name}
                     </span>
-                    <span>Age: {student.age}</span>
-                    <span>Site: {student.site}</span>
+                    <span className='text-lg'>Age: {student.age}</span>
+                    <span className='text-lg'>Site: {student.site}</span>
                     <div className="flex justify-end font-semibold">
                       <Button
                         style={{
                           marginTop: "-65px",
                           fontWeight: "semibold",
                           color: "#5D24FF",
+                          fontSize: '1.2rem'
                         }}
                       >
                         Edit
@@ -254,6 +173,7 @@ const StudentsTable = () => {
                           marginTop: "-65px",
                           fontWeight: "semibold",
                           color: "#E02424",
+                          fontSize: '1.2rem'
                         }}
                       >
                         Delete

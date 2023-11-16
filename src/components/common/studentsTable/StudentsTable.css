@@ -45,15 +45,40 @@
   font-size: 1rem !important; /* 16px */ 
 }
 
+.edit-delete-btn {
+  font-size: 1rem !important; /* 16px */ 
+}
+
 /* Font size for phone devices */
+@media (max-width: 640px) { /* Adjust this breakpoint as needed */
+  .edit-delete-btn {
+    font-size: 1.50rem !important; /* 20px */
+  }
+}
+
 @media (max-width: 640px) { /* Adjust this breakpoint as needed */
   .meal-count-btn {
     font-size: 1.50rem !important; /* 20px */
   }
 }
 
+.dropdown-label {
+  font-size: 1rem !important; /* 16px */ 
+}
+
 @media (max-width: 640px) { /* Adjust this breakpoint as needed */
-  .drop-button-container {
+  .dropdown-label {
+    font-size: 1.50rem !important; /* 20px */
+    height: 120px !important;
+  }
+}
+
+label {
+  font-size: 1rem !important; /* 16px */ 
+}
+
+@media (max-width: 640px) { /* Adjust this breakpoint as needed */
+  label {
     font-size: 1.50rem !important; /* 20px */
   }
 }
