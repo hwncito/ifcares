@@ -1,19 +1,19 @@
-import MealTableModal from "../mealTableModal/MealTableModal";
-import { Table } from "flowbite-react";
-import MealTableRow from "../mealTableRow/MealTableRow";
-import { Button } from "@mui/material";
-import React, { useState, useContext } from "react";
-import MealTableCount from "../mealTableZCount/MealTableCount";
-import "./MealTable.css";
+import MealTableModal from '../mealTableModal/MealTableModal';
+import { Table } from 'flowbite-react';
+import MealTableRow from '../mealTableRow/MealTableRow';
+import { Button } from '@mui/material';
+import React, { useState, useContext } from 'react';
+import MealTableCount from '../mealTableZCount/MealTableCount';
+import './MealTable.css';
 // import dayjs from "dayjs";
 //date select
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 //time select
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { MealSiteContext } from "../mealSiteProvider/MealSiteProvider";
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { MealSiteContext } from '../mealSiteProvider/MealSiteProvider';
 
 const MealTable = () => {
   const {
@@ -26,11 +26,9 @@ const MealTable = () => {
     selectedTime2,
     setSelectedTime2,
     selectedCheckboxData,
-    globalCounts
+    globalCounts,
   } = useContext(MealSiteContext);
   const validStudentData = Array.isArray(studentData) ? studentData : [];
-
-
 
   const [formattedData, setFormattedData] = useState([]);
 
@@ -89,9 +87,9 @@ const MealTable = () => {
         <Table.Body className="divide-y">
           <Table.Cell>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["DatePicker"]}>
+              <DemoContainer components={['DatePicker']}>
                 <div className="dateTimeError-container">
-                  <div className={dateError ? "input-error" : ""}>
+                  <div className={dateError ? 'input-error' : ''}>
                     <DatePicker
                       className="datepicker-input"
                       value={selectedDate}
@@ -103,7 +101,7 @@ const MealTable = () => {
                     />
                   </div>
                   {dateError && (
-                    <span style={{ color: "red" }}>Date is required</span>
+                    <span style={{ color: 'red' }}>Date is required</span>
                   )}
                 </div>
               </DemoContainer>
@@ -111,9 +109,9 @@ const MealTable = () => {
           </Table.Cell>
           <Table.Cell>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["TimePicker"]}>
+              <DemoContainer components={['TimePicker']}>
                 <div className="dateTimeError-container">
-                  <div className={time1Error ? "input-error" : ""}>
+                  <div className={time1Error ? 'input-error' : ''}>
                     <TimePicker
                       className="timepicker-input"
                       value={selectedTime1}
@@ -127,7 +125,7 @@ const MealTable = () => {
                     />
                   </div>
                   {time1Error && (
-                    <span style={{ color: "red" }}>Time In is required</span>
+                    <span style={{ color: 'red' }}>Time In is required</span>
                   )}
                 </div>
               </DemoContainer>
@@ -135,9 +133,9 @@ const MealTable = () => {
           </Table.Cell>
           <Table.Cell>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["TimePicker"]}>
+              <DemoContainer components={['TimePicker']}>
                 <div className="dateTimeError-container">
-                  <div className={time2Error ? "input-error" : ""}>
+                  <div className={time2Error ? 'input-error' : ''}>
                     <TimePicker
                       className="timepicker-input"
                       value={selectedTime2}
@@ -151,7 +149,7 @@ const MealTable = () => {
                     />
                   </div>
                   {time2Error && (
-                    <span style={{ color: "red" }}>Time Out is required</span>
+                    <span style={{ color: 'red' }}>Time Out is required</span>
                   )}
                 </div>
               </DemoContainer>
@@ -167,7 +165,6 @@ const MealTable = () => {
           <Table.HeadCell className="mealTable-headcell">
             Participant's Name
           </Table.HeadCell>
-          <Table.HeadCell className="mealTable-headcell">Age</Table.HeadCell>
           <Table.HeadCell className="mealTable-headcell checkbox">
             At
           </Table.HeadCell>
@@ -186,10 +183,7 @@ const MealTable = () => {
         </Table.Head>
         <Table.Body className="divide-y">
           {validStudentData.map((student) => (
-            <MealTableRow
-              student={student}
-              key={student.name}
-            />
+            <MealTableRow student={student} key={student.name} />
           ))}
         </Table.Body>
       </Table>
@@ -198,13 +192,13 @@ const MealTable = () => {
         <Button
           variant="contained"
           style={{
-            textTransform: "capitalize",
-            fontWeight: "bold",
-            backgroundColor: "#3DED97",
-            borderRadius: "13px",
-            minWidth: "130px",
-            minHeight: "40px",
-            boxShadow: "none",
+            textTransform: 'capitalize',
+            fontWeight: 'bold',
+            backgroundColor: '#3DED97',
+            borderRadius: '13px',
+            minWidth: '130px',
+            minHeight: '40px',
+            boxShadow: 'none',
           }}
           onClick={handleNextClick}
         >

@@ -56,9 +56,10 @@ const SitesDropdown = ({
       )}
       {sites.map((site) => (
         <Dropdown.Item
-          className="meal-count-btn"
+          className="flex items-center justify-start bg-white py-2 px-4 text-sm text-gray-700 cursor-pointer w-full hover:bg-gray-100 focus:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 focus:outline-none dark:hover:text-white dark:focus:bg-gray-600 dark:focus:text-white meal-count-btn"
           key={site.spreadsheetId}
           onClick={() => onSiteSelected(site.name)}
+          
         >
           {site.name}
         </Dropdown.Item>

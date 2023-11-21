@@ -22,9 +22,10 @@ const Form = () => {
   const onSubmit = (data) => {
     setSubmitting(true);
     console.log(data);
-    const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/'
+    const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/';
     const GAS_URL =
-      PROXY_URL + 'https://script.google.com/macros/s/AKfycbydLMqJketiihQlyAnRZB9IeXXsyqHpJga6K_meVD_YuqKVvr5EVLPgO7xKsEXNFK51/exec';
+      PROXY_URL +
+      'https://script.google.com/macros/s/AKfycbyWz46LKg4f-voX_3_md70ceFv-AZV6Em5QM8UwIg7wR8f9KFXqG1HlQjAyJA6NKiBm/exec';
 
     const formattedData = {
       actionType: 'add',

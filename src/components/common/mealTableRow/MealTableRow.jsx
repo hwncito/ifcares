@@ -40,7 +40,7 @@ const MealTableRow = ({ student }) => {
     <Table.Row>
       <Table.Cell className="mealTableRow-style">{student.number}</Table.Cell>
       <Table.Cell className="mealTableRow-style">{student.name}</Table.Cell>
-      <Table.Cell className="mealTableRow-style">{student.age}</Table.Cell>
+      
       <Table.Cell>
         <Checkbox
           className="green-checkbox"
