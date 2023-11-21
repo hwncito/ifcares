@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
-import { Table } from "flowbite-react";
-import "./StudentsRow.css";
-import DeleteModal from "../deleteModal/DeleteModal";
-import { useState } from "react";
-import SitesSelect from "../sitesSelect/SitesSelect";
-import axios from "axios";
-import SavingModal from "../savingModal/SavingModal";
+import { Table } from 'flowbite-react';
+import './StudentsRow.css';
+import DeleteModal from '../deleteModal/DeleteModal';
+import { useState } from 'react';
+import SitesSelect from '../sitesSelect/SitesSelect';
+import axios from 'axios';
+import SavingModal from '../savingModal/SavingModal';
+import { useEffect } from 'react';
 
 export default function StudentsRow({ student }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -18,6 +19,21 @@ export default function StudentsRow({ student }) {
   });
   const [openModal, setOpenModal] = useState(undefined);
   const [loading, setLoading] = useState(false);
+  const [toastType, setToastType] = useState(null);
+  const [toastMessage, setToastMessage] = useState('');
+
+  useEffect(() => {
+    if (toastType) {
+      setOpenModal(toastType);
+      // Reset the toast after a delay
+      const timer = setTimeout(() => {
+        setOpenModal(null);
+        window.location.reload();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [toastType, toastMessage]);
 
   return (
     <>
@@ -25,14 +41,16 @@ export default function StudentsRow({ student }) {
         openModal={openModal}
         setOpenModal={setOpenModal}
         loading={loading}
+        type={toastType} // Passed to SavingModal
+        message={toastMessage} // Passed to SavingModal
       />
 
       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
         <Table.Cell className="row-style">
           {isEditing ? (
             <input
-            type="text"
-            className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:border-violet-500 edit-input"
+              type="text"
+              className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:border-violet-500 edit-input"
               value={editedStudent.name}
               onChange={(e) =>
                 setEditedStudent({ ...editedStudent, name: e.target.value })
@@ -60,8 +78,8 @@ export default function StudentsRow({ student }) {
         <Table.Cell className="row-style">
           {isEditing ? (
             <SitesSelect
-            isStudentsRow={true}
-            className="edit-select"
+              isStudentsRow={true}
+              className="edit-select"
               selectedSiteValue={editedStudent.site}
               onSiteSelected={(site) =>
                 setEditedStudent((prevStudent) => ({
@@ -80,10 +98,10 @@ export default function StudentsRow({ student }) {
             onClick={() => {
               if (isEditing) {
                 setLoading(true);
-                setOpenModal("pop-up");
+                setOpenModal('pop-up');
 
                 const formattedData = {
-                  actionType: "edit",
+                  actionType: 'edit',
                   values: [
                     student.name,
                     student.site,
@@ -95,24 +113,30 @@ export default function StudentsRow({ student }) {
 
                 console.log(formattedData);
 
-                const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/'
-                const GAS_URL = 'https://script.google.com/macros/s/AKfycbydLMqJketiihQlyAnRZB9IeXXsyqHpJga6K_meVD_YuqKVvr5EVLPgO7xKsEXNFK51/exec'
+                const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/';
+                const GAS_URL =
+                  'https://script.google.com/macros/s/AKfycbw9BaufYdgz2QPIoOGq-p8dN7G2wCnMAghYN2MJSW2IMZ2pZxSW8nDc6pDh3ZdIc4NI/exec';
 
                 axios
-                  .post(
-                    PROXY_URL + GAS_URL,
-                    JSON.stringify(formattedData),
-                    {
-                      headers: {
-                        "Content-Type": "application/json",
-                        "x-requested-with": "XMLHttpRequest",
-                      },
-                    }
-                  )
+                  .post(PROXY_URL + GAS_URL, JSON.stringify(formattedData), {
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'x-requested-with': 'XMLHttpRequest',
+                    },
+                  })
                   .then((response) => {
-                    console.log("success:", response);
+                    if (response.data.result === 'success') {
+                      setToastType('success');
+                      setToastMessage('Student edited successfully.');
+                    } else {
+                      setToastType('error');
+                      setToastMessage(
+                        response.data.message ||
+                          'Student could not be updated. Try again later.'
+                      );
+                    }
                     setLoading(false);
-                    setOpenModal("success");
+                    setOpenModal(toastType);
                     setTimeout(() => {
                       setOpenModal(null);
                     }, 3000);
@@ -121,9 +145,11 @@ export default function StudentsRow({ student }) {
                     // Handle successful response
                   })
                   .catch((error) => {
-                    console.log("error:", error);
+                    setToastType('error');
+                    setToastMessage('An error occurred. Try again later.');
+                    console.log('error:', error);
                     setLoading(false);
-                    setOpenModal("error");
+                    setOpenModal('error');
                     setTimeout(() => {
                       setOpenModal(null); // Hide the toast after a few seconds
                     }, 3000);
@@ -134,7 +160,7 @@ export default function StudentsRow({ student }) {
               setIsEditing(!isEditing);
             }}
           >
-            <span className="editing-style">{isEditing ? "SAVE" : "EDIT"}</span>
+            <span className="editing-style">{isEditing ? 'SAVE' : 'EDIT'}</span>
           </p>
         </Table.Cell>
         <Table.Cell>
