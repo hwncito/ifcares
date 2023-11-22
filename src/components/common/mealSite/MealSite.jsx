@@ -7,37 +7,44 @@ import MealTable from '../mealTable/MealTable';
 import './MealSite.css';
 import useAuth from '../../../hooks/useAuth';
 import { ROLES } from '../../../constants';
-import { MealSiteContext } from '../mealSiteProvider/MealSiteProvider'; 
-
+import { MealSiteContext } from '../mealSiteProvider/MealSiteProvider';
 
 const MealSite = () => {
   const [sites, setSites] = useState([]);
   const { auth } = useAuth();
-  const { selectedSite, setSelectedSite, siteData, setSiteData, studentData, setStudentData } = useContext(MealSiteContext);
+  const {
+    selectedSite,
+    setSelectedSite,
+    siteData,
+    setSiteData,
+    studentData,
+    setStudentData,
+  } = useContext(MealSiteContext);
 
   const GAS_URL =
-    'https://script.google.com/macros/s/AKfycbydLMqJketiihQlyAnRZB9IeXXsyqHpJga6K_meVD_YuqKVvr5EVLPgO7xKsEXNFK51/exec';
+    'https://script.google.com/macros/s/AKfycbzGKeu4PGe4iUmPicnirgKG0eMn7Bn_fmgqLK9a_6oh6noixf7_o65DIi5JD-bne2E/exec';
 
   useEffect(() => {
-    console.log(selectedSite);
+    // console.log(selectedSite);
     if (selectedSite) {
       fetchDataForSelectedSite(selectedSite);
       fetchStudentForSelectedSite(selectedSite);
-    }else{
-
-    Promise.all([axios.get(GAS_URL + '?type=sites')])
-      .then(([sitesResponse]) => {
-        if (auth.role !== ROLES.Admin) {
-          console.log("Sites: ", sitesResponse.data)
-          const sites = sitesResponse.data.filter(item => item.name === auth.assignedSite)
-          setSites(sites)
-        } else {
-          setSites(sitesResponse.data);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    } else {
+      Promise.all([axios.get(GAS_URL + '?type=sites')])
+        .then(([sitesResponse]) => {
+          if (auth.role !== ROLES.Admin) {
+            console.log('Sites: ', sitesResponse.data);
+            const sites = sitesResponse.data.filter(
+              (item) => item.name === auth.assignedSite
+            );
+            setSites(sites);
+          } else {
+            setSites(sitesResponse.data);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
     }
   }, [selectedSite]);
 
