@@ -2,7 +2,7 @@ import MealTableModal from '../mealTableModal/MealTableModal';
 import { Table } from 'flowbite-react';
 import MealTableRow from '../mealTableRow/MealTableRow';
 import { Button } from '@mui/material';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import MealTableCount from '../mealTableZCount/MealTableCount';
 import './MealTable.css';
 // import dayjs from "dayjs";
@@ -20,6 +20,8 @@ const MealTable = () => {
   const {
     studentData,
     selectedSite,
+    lastTimeIn,
+    lastTimeOut,
     selectedDate,
     setSelectedDate,
     selectedTime1,
@@ -43,6 +45,15 @@ const MealTable = () => {
 
   // const minTime = dayjs().hour(8).minute(5).second(0).millisecond(0);
   // const maxTime = dayjs().hour(19).minute(0).second(0).millisecond(0);
+
+  useEffect(() => {
+    if (lastTimeIn) {
+      setSelectedTime1(lastTimeIn);
+    }
+    if (lastTimeOut) {
+      setSelectedTime2(lastTimeOut);
+    }
+  }, [lastTimeIn, lastTimeOut]);
 
   // post request with the dates
   const postSelectedDate = async (date) => {
@@ -79,7 +90,7 @@ const MealTable = () => {
         );
 
         // Handle the response
-        if (response.data.result == 'error') {
+        if (response.data.result === 'error') {
           console.log('Error Response:', response.data.message);
           setDateValidationError(response.data.message);
         } else {
@@ -189,7 +200,6 @@ const MealTable = () => {
                       required
                       // minTime={minTime}
                       // maxTime={maxTime}
-                      // defaultValue={}
                     />
                   </div>
                   {time1Error && (
@@ -214,7 +224,6 @@ const MealTable = () => {
                       required
                       // minTime={minTime}
                       // maxTime={maxTime}
-                      // defaultValue={}
                     />
                   </div>
                   {time2Error && (

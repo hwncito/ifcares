@@ -15,6 +15,8 @@ const MealSite = () => {
   const {
     selectedSite,
     setSelectedSite,
+    setLastTimeIn,
+    setLastTimeOut,
     siteData,
     setSiteData,
     studentData,
@@ -54,6 +56,8 @@ const MealSite = () => {
       .get(GAS_URL + `?type=siteData&site=${site}`)
       .then((response) => {
         setSiteData(response.data);
+        setLastTimeIn(response.data.lastTimeIn); // Assuming these fields exist in your response
+        setLastTimeOut(response.data.lastTimeOut);
       })
       .catch((error) => {
         console.error('Error fetching site data:', error);
