@@ -160,7 +160,7 @@ const MealTable = () => {
 
       <br />
       <Table hoverable>
-        <Table.Head>
+        <Table.Head >
           <Table.HeadCell className="mealTable-headcell">#</Table.HeadCell>
           <Table.HeadCell className="mealTable-headcell">
             Participant's Name
