@@ -14,7 +14,6 @@ import Pagination from "../pagination/pagination";
 import { ROLES } from "../../../constants";
 import EditModal from "../editModal/editModal";
 import useIsMobile from "../../../hooks/useIsMobile";
-import SavingModal from "../savingModal/SavingModal";
 
 import "./StudentsTable.css";
 
