@@ -7,6 +7,7 @@ import { useState } from 'react';
 import SitesSelect from '../sitesSelect/SitesSelect';
 import axios from 'axios';
 import SavingModal from '../savingModal/SavingModal';
+import { useEffect } from 'react';
 
 export default function StudentsRow({ student }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -18,6 +19,21 @@ export default function StudentsRow({ student }) {
   });
   const [openModal, setOpenModal] = useState(undefined);
   const [loading, setLoading] = useState(false);
+  const [toastType, setToastType] = useState(null);
+  const [toastMessage, setToastMessage] = useState('');
+
+  useEffect(() => {
+    if (toastType) {
+      setOpenModal(toastType);
+      // Reset the toast after a delay
+      const timer = setTimeout(() => {
+        setOpenModal(null);
+        window.location.reload();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [toastType, toastMessage]);
 
   return (
     <>
@@ -25,13 +41,16 @@ export default function StudentsRow({ student }) {
         openModal={openModal}
         setOpenModal={setOpenModal}
         loading={loading}
+        type={toastType} // Passed to SavingModal
+        message={toastMessage} // Passed to SavingModal
       />
 
       <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+        <Table.Cell className="row-style">
           {isEditing ? (
             <input
-              className="border rounded-md px-3 py-2 w-full focus:border-blue-400 focus:outline-none"
+              type="text"
+              className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:border-violet-500 edit-input"
               value={editedStudent.name}
               onChange={(e) =>
                 setEditedStudent({ ...editedStudent, name: e.target.value })
@@ -41,11 +60,12 @@ export default function StudentsRow({ student }) {
             student.name
           )}
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell className="row-style">
           {isEditing ? (
             <input
               type="number"
-              className="border rounded-md px-3 py-2 w-full focus:border-blue-400 focus:outline-none"
+              // className="border rounded-md px-3 py-2 w-full focus:border-violet-500 focus:outline-none"
+              className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:border-violet-500 edit-input"
               value={editedStudent.age}
               onChange={(e) =>
                 setEditedStudent({ ...editedStudent, age: e.target.value })
@@ -55,9 +75,11 @@ export default function StudentsRow({ student }) {
             student.age
           )}
         </Table.Cell>
-        <Table.Cell>
+        <Table.Cell className="row-style">
           {isEditing ? (
             <SitesSelect
+              isStudentsRow={true}
+              className="edit-select"
               selectedSiteValue={editedStudent.site}
               onSiteSelected={(site) =>
                 setEditedStudent((prevStudent) => ({
@@ -72,7 +94,7 @@ export default function StudentsRow({ student }) {
         </Table.Cell>
         <Table.Cell>
           <p
-            className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 cursor-pointer"
+            className="font-medium text-violet-500 hover:underline dark:text-violet-500 cursor-pointer"
             onClick={() => {
               if (isEditing) {
                 setLoading(true);
@@ -91,21 +113,30 @@ export default function StudentsRow({ student }) {
 
                 console.log(formattedData);
 
+                const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/';
+                const GAS_URL =
+                  'https://script.google.com/macros/s/AKfycbw9BaufYdgz2QPIoOGq-p8dN7G2wCnMAghYN2MJSW2IMZ2pZxSW8nDc6pDh3ZdIc4NI/exec';
+
                 axios
-                  .post(
-                    'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbxMWDqUjbFKvv46u13RV1GwzthjSkucPTTsZLH0l_CxJY3vtmZu0gWMsEjLxFL_KK-r/exec',
-                    JSON.stringify(formattedData),
-                    {
-                      headers: {
-                        'Content-Type': 'application/json',
-                        'x-requested-with': 'XMLHttpRequest',
-                      },
-                    }
-                  )
+                  .post(PROXY_URL + GAS_URL, JSON.stringify(formattedData), {
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'x-requested-with': 'XMLHttpRequest',
+                    },
+                  })
                   .then((response) => {
-                    console.log('success:', response);
+                    if (response.data.result === 'success') {
+                      setToastType('success');
+                      setToastMessage('Student edited successfully.');
+                    } else {
+                      setToastType('error');
+                      setToastMessage(
+                        response.data.message ||
+                          'Student could not be updated. Try again later.'
+                      );
+                    }
                     setLoading(false);
-                    setOpenModal('success');
+                    setOpenModal(toastType);
                     setTimeout(() => {
                       setOpenModal(null);
                     }, 3000);
@@ -114,6 +145,8 @@ export default function StudentsRow({ student }) {
                     // Handle successful response
                   })
                   .catch((error) => {
+                    setToastType('error');
+                    setToastMessage('An error occurred. Try again later.');
                     console.log('error:', error);
                     setLoading(false);
                     setOpenModal('error');
@@ -127,7 +160,7 @@ export default function StudentsRow({ student }) {
               setIsEditing(!isEditing);
             }}
           >
-            <span>{isEditing ? 'Save' : 'Edit'}</span>
+            <span className="editing-style">{isEditing ? 'SAVE' : 'EDIT'}</span>
           </p>
         </Table.Cell>
         <Table.Cell>
@@ -135,7 +168,7 @@ export default function StudentsRow({ student }) {
             className="font-medium text-red-600 hover:underline dark:text-red-500"
             onClick={() => setShowDeleteModal(true)}
           >
-            Delete
+            DELETE
           </button>
         </Table.Cell>
       </Table.Row>

@@ -18,12 +18,15 @@ const Form = () => {
 
   const [submitting, setSubmitting] = useState(false);
   const [toastType, setToastType] = useState('');
+  const [toastMessage, setToastMessage] = useState('');
 
   const onSubmit = (data) => {
     setSubmitting(true);
     console.log(data);
+    const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/';
     const GAS_URL =
-      'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec';
+      PROXY_URL +
+      'https://script.google.com/macros/s/AKfycbyWz46LKg4f-voX_3_md70ceFv-AZV6Em5QM8UwIg7wR8f9KFXqG1HlQjAyJA6NKiBm/exec';
 
     const formattedData = {
       actionType: 'add',
@@ -38,6 +41,7 @@ const Form = () => {
           'Content-Type': 'application/json',
           'x-requested-with': 'XMLHttpRequest',
         },
+        mode: 'no-cors',
       })
       .then((response) => {
         if (response.data.result === 'success') {
@@ -47,6 +51,7 @@ const Form = () => {
         } else {
           console.error('Error in sending data:', response.data.message);
           setToastType('error');
+          setToastMessage(response.data.message)
           setSubmitting(false);
         }
       })
@@ -85,7 +90,7 @@ const Form = () => {
             <TextField
               className="text-field"
               name="name"
-              label="Name"
+              label="Full Name"
               variant="outlined"
               type="text"
               onChange={handleChange}
@@ -111,32 +116,48 @@ const Form = () => {
             <Button
               type="submit"
               variant="contained"
-              size="small"
-              style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
+              style={{
+                textTransform: 'capitalize',
+                fontWeight: 'bold',
+                width: '115px',
+                height: '40px',
+                fontSize: '14px',
+                borderRadius: '13px',
+                background: '#5D24FF',
+                boxShadow: '0px 4px 10px 2px rgba(0, 0, 0, 0.25)',
+              }}
             >
-              Add
+              Submit
             </Button>
           </form>
 
           <div className="toast-container">
             {toastType === 'success' && (
               <div className="your-toast-wrapper-class">
-                <FormToast type={toastType} />
+                <FormToast type={toastType} message={toastMessage}/>
               </div>
             )}
             {toastType === 'error' && (
               <div className="your-toast-wrapper-class">
-                <FormToast type={toastType} />
+                <FormToast type={toastType} message={toastMessage}/>
               </div>
             )}
           </div>
 
           <div className="button-container">
-            <Link to="/">
+            <Link to="/home">
               <Button
                 variant="contained"
                 size="small"
-                style={{ textTransform: 'capitalize', fontWeight: 'bold' }}
+                style={{
+                  textTransform: 'capitalize',
+                  fontWeight: 'bold',
+                  width: '80px',
+                  height: '31px',
+                  fontSize: '13px',
+                  background: '#5D24FF',
+                  boxShadow: '0px 4px 10px 2px rgba(0, 0, 0, 0.25)',
+                }}
               >
                 Back
               </Button>

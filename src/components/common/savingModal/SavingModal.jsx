@@ -4,20 +4,25 @@ import LoadingSpinner from '../loadingSpinner/LoadingSpinner';
 import './SavingModal.css';
 import SavingToast from '../savingToast/SavingToast';
 
-const SavingModal = (props) => {
+const SavingModal = ({ openModal, setOpenModal, loading, message }) => {
   return (
     <>
       <Modal
-        show={!!props.openModal}
+        show={!!openModal}
         size="md"
         popup
-        onClose={() => props.setOpenModal(undefined)}
+        onClose={() => setOpenModal(undefined)}
       >
-        <Modal.Footer />
-        <Modal.Body className="text-center">
-          {props.loading && <LoadingSpinner className="spinner" />}
-          {props.openModal === 'success' && <SavingToast type="success" />}
-          {props.openModal === 'error' && <SavingToast type="error" />}
+        <Modal.Body className="modal-body">
+          {loading && (
+            <div className="saving-spinner">
+              <LoadingSpinner />
+            </div>
+          )}
+          {openModal === 'success' && <SavingToast type="success" />}
+          {openModal === 'error' && (
+            <SavingToast type="error" message={message} />
+          )}
         </Modal.Body>
       </Modal>
     </>
