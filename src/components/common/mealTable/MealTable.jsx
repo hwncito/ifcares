@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import React, { useState, useContext, useEffect } from 'react';
 import MealTableCount from '../mealTableZCount/MealTableCount';
 import './MealTable.css';
-// import dayjs from "dayjs";
+import dayjs from 'dayjs';
 //date select
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -48,12 +48,38 @@ const MealTable = () => {
 
   useEffect(() => {
     if (lastTimeIn) {
-      setSelectedTime1(lastTimeIn);
+      // console.log(lastTimeIn);
+      // const timeInFormatted = formatTimeForPicker(lastTimeIn);
+      // console.log(timeInFormatted);
+      // setSelectedTime1(timeInFormatted);
+
+      const timeInFormatted = formatTimeForPicker(lastTimeIn);
+      setSelectedTime1(timeInFormatted);
+      console.log(timeInFormatted);
     }
     if (lastTimeOut) {
-      setSelectedTime2(lastTimeOut);
+      // console.log(lastTimeOut);
+      // const timeOutFormatted = formatTimeForPicker(lastTimeOut);
+      // console.log(timeOutFormatted);
+      // setSelectedTime2(timeOutFormatted);
+      const timeOutFormatted = formatTimeForPicker(lastTimeOut);
+      setSelectedTime2(timeOutFormatted);
+      console.log(timeOutFormatted);
     }
   }, [lastTimeIn, lastTimeOut]);
+
+  function formatTimeForPicker(dateTimeStr) {
+    // Extract the time part using a regular expression
+    const timeMatch = dateTimeStr.match(/\d{2}:\d{2}:\d{2}/);
+    if (!timeMatch) return null;
+
+    let [hours, minutes] = timeMatch[0].split(':').map(Number);
+
+    // Create a dayjs object with the time, assuming the date is today
+    const date = dayjs().hour(hours).minute(minutes).second(0);
+
+    return date;
+  }
 
   // post request with the dates
   const postSelectedDate = async (date) => {

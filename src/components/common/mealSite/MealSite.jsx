@@ -24,7 +24,7 @@ const MealSite = () => {
   } = useContext(MealSiteContext);
 
   const GAS_URL =
-    'https://script.google.com/macros/s/AKfycbzGKeu4PGe4iUmPicnirgKG0eMn7Bn_fmgqLK9a_6oh6noixf7_o65DIi5JD-bne2E/exec';
+    'https://script.google.com/macros/s/AKfycbzNhZUKyRekUop9dRW-vB0T2vIyPvnOUYWFuB_DI8PuJYvad0WAZBvYsM9Wj-4uyZpF/exec';
 
   useEffect(() => {
     // console.log(selectedSite);
