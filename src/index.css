@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,7 +12,12 @@
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #f0f0f0;
 }
+html {
+  overflow: initial !important;
+  padding-right: 0 !important;
+  }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

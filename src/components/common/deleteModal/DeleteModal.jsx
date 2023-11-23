@@ -25,11 +25,12 @@ const DeleteModal = ({ onClose, student }) => {
 
     console.log(deleteData);
 
+    const PROXY_URL = 'https://happy-mixed-gaura.glitch.me/';
     const GAS_DELETE_URL =
-      'https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec';
+      'https://script.google.com/macros/s/AKfycbyQX7V9R8g1VEMAww_G8UMW9iTQyewe1CcZi90-SU0YFne3xTg5Qa_40lbqWp2w6Tlu/exec';
 
     axios
-      .post(GAS_DELETE_URL, JSON.stringify(deleteData), {
+      .post(PROXY_URL + GAS_DELETE_URL, JSON.stringify(deleteData), {
         headers: {
           'Content-Type': 'application/json',
           'x-requested-with': 'XMLHttpRequest',
@@ -66,10 +67,12 @@ const DeleteModal = ({ onClose, student }) => {
           </div>
         ) : (
           <>
-            <Modal.Body>
+            <Modal.Body className="modal-body">
               <div className="text-center">
                 {loading ? (
-                  <LoadingSpinner />
+                  <div className="loading-spinner">
+                    <LoadingSpinner />
+                  </div>
                 ) : (
                   <>
                     <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
